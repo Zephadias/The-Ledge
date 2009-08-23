@@ -1,0 +1,114 @@
+<flash_project version="1" name="TheLedge">
+  <project_folder expanded="true" name="TheLedge">
+    <project_folder expanded="true" name="Engine">
+      <project_file path="Engine\Background.as" filetype="as"/>
+      <project_file path="Engine\Ledge.as" filetype="as"/>
+      <project_file path="Engine\Level.as" filetype="as"/>
+      <project_file path="Engine\TriggerEvent.as" filetype="as"/>
+    </project_folder>
+    <project_folder expanded="true" name="Game">
+      <project_file path="Game\Enemy.as" filetype="as"/>
+      <project_file path="Game\Player.as" filetype="as"/>
+      <project_file path="Game\Projectile.as" filetype="as"/>
+      <project_file path="Game\Prop.as" filetype="as"/>
+      <project_file path="Game\TheLedge.as" filetype="as"/>
+      <project_file path="Game\TL.as" filetype="as"/>
+      <project_file path="Game\Weapon.as" filetype="as"/>
+    </project_folder>
+    <project_folder expanded="false" name="GameDoc">
+      <project_folder expanded="false" name="files">
+        <project_folder expanded="false" name="Engine">
+          <project_file path="GameDoc\files\Engine\Background-as.html" filetype="html"/>
+          <project_file path="GameDoc\files\Engine\Ledge-as.html" filetype="html"/>
+          <project_file path="GameDoc\files\Engine\Level-as.html" filetype="html"/>
+          <project_file path="GameDoc\files\Engine\TriggerEvent-as.html" filetype="html"/>
+        </project_folder>
+        <project_folder expanded="false" name="Game">
+          <project_file path="GameDoc\files\Game\Enemy-as.html" filetype="html"/>
+          <project_file path="GameDoc\files\Game\Item-as.html" filetype="html"/>
+          <project_file path="GameDoc\files\Game\Player-as.html" filetype="html"/>
+          <project_file path="GameDoc\files\Game\Projectile-as.html" filetype="html"/>
+          <project_file path="GameDoc\files\Game\TheLedge-as.html" filetype="html"/>
+          <project_file path="GameDoc\files\Game\Weapon-as.html" filetype="html"/>
+        </project_folder>
+      </project_folder>
+      <project_folder expanded="false" name="index">
+        <project_file path="GameDoc\index\Classes.html" filetype="html"/>
+        <project_file path="GameDoc\index\Functions.html" filetype="html"/>
+        <project_file path="GameDoc\index\General.html" filetype="html"/>
+        <project_file path="GameDoc\index\Properties.html" filetype="html"/>
+        <project_file path="GameDoc\index\Variables.html" filetype="html"/>
+      </project_folder>
+      <project_folder expanded="false" name="javascript">
+        <project_file path="GameDoc\javascript\main.js" filetype="js"/>
+        <project_file path="GameDoc\javascript\searchdata.js" filetype="js"/>
+      </project_folder>
+      <project_folder expanded="false" name="search">
+        <project_file path="GameDoc\search\ClassesB.html" filetype="html"/>
+        <project_file path="GameDoc\search\ClassesE.html" filetype="html"/>
+        <project_file path="GameDoc\search\ClassesI.html" filetype="html"/>
+        <project_file path="GameDoc\search\ClassesL.html" filetype="html"/>
+        <project_file path="GameDoc\search\ClassesP.html" filetype="html"/>
+        <project_file path="GameDoc\search\ClassesT.html" filetype="html"/>
+        <project_file path="GameDoc\search\ClassesW.html" filetype="html"/>
+        <project_file path="GameDoc\search\FunctionsB.html" filetype="html"/>
+        <project_file path="GameDoc\search\FunctionsE.html" filetype="html"/>
+        <project_file path="GameDoc\search\FunctionsI.html" filetype="html"/>
+        <project_file path="GameDoc\search\FunctionsL.html" filetype="html"/>
+        <project_file path="GameDoc\search\FunctionsP.html" filetype="html"/>
+        <project_file path="GameDoc\search\FunctionsS.html" filetype="html"/>
+        <project_file path="GameDoc\search\FunctionsT.html" filetype="html"/>
+        <project_file path="GameDoc\search\FunctionsU.html" filetype="html"/>
+        <project_file path="GameDoc\search\FunctionsW.html" filetype="html"/>
+        <project_file path="GameDoc\search\GeneralB.html" filetype="html"/>
+        <project_file path="GameDoc\search\GeneralE.html" filetype="html"/>
+        <project_file path="GameDoc\search\GeneralF.html" filetype="html"/>
+        <project_file path="GameDoc\search\GeneralI.html" filetype="html"/>
+        <project_file path="GameDoc\search\GeneralL.html" filetype="html"/>
+        <project_file path="GameDoc\search\GeneralP.html" filetype="html"/>
+        <project_file path="GameDoc\search\GeneralR.html" filetype="html"/>
+        <project_file path="GameDoc\search\GeneralS.html" filetype="html"/>
+        <project_file path="GameDoc\search\GeneralSymbols.html" filetype="html"/>
+        <project_file path="GameDoc\search\GeneralT.html" filetype="html"/>
+        <project_file path="GameDoc\search\GeneralU.html" filetype="html"/>
+        <project_file path="GameDoc\search\GeneralV.html" filetype="html"/>
+        <project_file path="GameDoc\search\GeneralW.html" filetype="html"/>
+        <project_file path="GameDoc\search\NoResults.html" filetype="html"/>
+        <project_file path="GameDoc\search\PropertiesB.html" filetype="html"/>
+        <project_file path="GameDoc\search\PropertiesS.html" filetype="html"/>
+        <project_file path="GameDoc\search\VariablesB.html" filetype="html"/>
+        <project_file path="GameDoc\search\VariablesR.html" filetype="html"/>
+        <project_file path="GameDoc\search\VariablesSymbols.html" filetype="html"/>
+      </project_folder>
+      <project_folder expanded="false" name="styles">
+        <project_file path="GameDoc\styles\main.css" filetype="css"/>
+      </project_folder>
+      <project_file path="GameDoc\index.html" filetype="html"/>
+      <project_file path="GameDoc\menu.html" filetype="html"/>
+    </project_folder>
+    <project_folder expanded="false" name="Natural Docs">
+      <project_folder expanded="false" name="Data">
+        <project_file path="Natural Docs\Data\ClassHierarchy.nd" filetype="nd"/>
+        <project_file path="Natural Docs\Data\ConfigFileInfo.nd" filetype="nd"/>
+        <project_file path="Natural Docs\Data\FileInfo.nd" filetype="nd"/>
+        <project_file path="Natural Docs\Data\ImageFileInfo.nd" filetype="nd"/>
+        <project_file path="Natural Docs\Data\ImageReferenceTable.nd" filetype="nd"/>
+        <project_file path="Natural Docs\Data\IndexInfo.nd" filetype="nd"/>
+        <project_file path="Natural Docs\Data\PreviousMenuState.nd" filetype="nd"/>
+        <project_file path="Natural Docs\Data\PreviousSettings.nd" filetype="nd"/>
+        <project_file path="Natural Docs\Data\SymbolTable.nd" filetype="nd"/>
+      </project_folder>
+      <project_file path="Natural Docs\Languages.txt" filetype="txt"/>
+      <project_file path="Natural Docs\Menu.txt" filetype="txt"/>
+      <project_file path="Natural Docs\Menu_Backup.txt" filetype="txt"/>
+      <project_file path="Natural Docs\Topics.txt" filetype="txt"/>
+    </project_folder>
+    <project_folder expanded="false" name="ParticleEngine"/>
+    <project_folder expanded="false" name="UISystem"/>
+    <project_file path="makeDoc.bat" filetype="bat"/>
+    <project_file path="TheLedge.fla" filetype="fla"/>
+    <project_file path=".flashProjectProperties" filetype="flashprojectproperties"/>
+    <project_file path="TheLedge.flp" filetype="flp"/>
+    <project_file path="TheLedge.swf" filetype="swf"/>
+  </project_folder>
+</flash_project>
