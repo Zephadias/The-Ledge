@@ -8,7 +8,7 @@
 /*		@game: The Ledge
 /*
 /**********************************************************/
-
+//For reals, Ryan is lame.
 package Game 
 {
 	import flash.display.*;
