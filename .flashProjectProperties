@@ -1,0 +1,29 @@
+<projectDescription>
+  <id>1250123277529</id>
+  <name>TheLedge</name>
+  <asVersion>0</asVersion>
+  <boundTemplate>file:///C|/Users/Zephadias/AppData/Local/Adobe/Flash CS4/en/Configuration/Project/templates/boundClass_as3.as</boundTemplate>
+  <classTemplate>file:///C|/Users/Zephadias/AppData/Local/Adobe/Flash CS4/en/Configuration/Project/templates/standardClass_as3.as</classTemplate>
+  <classPath>.</classPath>
+  <defaultApp/>
+  <rootURI>file:///C|/Users/Zephadias/Documents/Games/TheLedge/</rootURI>
+  <flexSDK/>
+  <sources editable="false"/>
+  <libraries editable="false"/>
+  <externalLibraries editable="false"/>
+  <compileList editable="false"/>
+  <recentFiles editable="false">
+    <uri label="Player.as">file:///C|/Users/Zephadias/Documents/Games/TheLedge/Game/Player.as</uri>
+    <uri label="TheLedge.as">file:///C|/Users/Zephadias/Documents/Games/TheLedge/Game/TheLedge.as</uri>
+    <uri label="Level.as">file:///C|/Users/Zephadias/Documents/Games/TheLedge/Engine/Level.as</uri>
+    <uri label="Background.as">file:///C|/Users/Zephadias/Documents/Games/TheLedge/Engine/Background.as</uri>
+    <uri label="GameVars.xml">file:///C|/Users/Zephadias/Documents/Games/TheLedge/GameVars.xml</uri>
+    <uri label="TheLedge.fla">file:///C|/Users/Zephadias/Documents/Games/TheLedge/TheLedge.fla</uri>
+    <uri label="Ledge.as">file:///C|/Users/Zephadias/Documents/Games/TheLedge/Engine/Ledge.as</uri>
+    <uri label="Weapon.as">file:///C|/Users/Zephadias/Documents/Games/TheLedge/Game/Weapon.as</uri>
+    <uri label="Projectile.as">file:///C|/Users/Zephadias/Documents/Games/TheLedge/Game/Projectile.as</uri>
+    <uri label="Enemy.as">file:///C|/Users/Zephadias/Documents/Games/TheLedge/Game/Enemy.as</uri>
+    <uri label="TriggerEvent.as">file:///C|/Users/Zephadias/Documents/Games/TheLedge/Engine/TriggerEvent.as</uri>
+  </recentFiles>
+  <locations editable="false"/>
+</projectDescription>

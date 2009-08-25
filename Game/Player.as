@@ -91,12 +91,18 @@ package Game
 		
 		public function moveLeft(time:Number):void 
 		{
-			this.x -= speed*time;
+			if( !( (this.x - (speed*time)) <= 0))
+			{
+				this.x -= speed*time;
+			}
 		}
 		
 		public function moveRight(time:Number):void 
 		{
-			this.x += speed*time;
+			if( !( (this.x + (this.width/2) + (speed*time) ) >= (levelWidth - levelWidth/2) ) )
+			{
+				this.x += speed*time;
+			}
 		}
 		
 		public function jump(time:Number):void

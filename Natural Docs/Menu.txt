@@ -62,7 +62,7 @@ Group: Game  {
    File: Prop  (Game\Prop.as)
    File: TheLedge  (Game\TheLedge.as)
    File: TL  (Game\TL.as)
-   File: Weapon.as  (Game\Weapon.as)
+   File: Weapon  (Game\Weapon.as)
    }  # Group: Game
 
 Group: Index  {
@@ -73,6 +73,5 @@ Group: Index  {
    Variable Index: Variables
    Property Index: Properties
    Constant Index: Constants
-   File Index: Files
    }  # Group: Index
 

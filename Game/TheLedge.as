@@ -64,7 +64,7 @@ package Game
 		private static const GAME_WIDTH:uint = 600;
 		
 		/**
-		* Game height in pixels : 550
+		* Game height in pixels : 600
 		*/
 		private static const GAME_HEIGHT:uint = 400;
 		
@@ -108,13 +108,31 @@ package Game
 		*/
 		private var gameTime:uint;
 		
+		/**
+		* A link to the root display object. 
+		*/
 		private var rootDisplay:Object = this;
 		
+		/**
+		* The main player of the game. 
+		*/
 		private var player:Player;
 		
+		/**
+		* An XML Object used to input variables into the game at run-time. 
+		*/
 		public var xmlData:XML;
 		
+		/**
+		* The first level. 
+		*/
 		public var level_1:Level;
+		
+		/**
+		 * The Ledge constructor - Loads the debugger properties and loads the XML file.
+		 * 
+		 * @return  N/A
+		 */
 		
 		public function TheLedge() 
 		{ 
@@ -124,6 +142,12 @@ package Game
 			loadXML();
 		}
 		
+		/**
+		 * Adds the keyboard listeners and game loop event, creates a new game.
+		 * 
+		 * @return N/A  
+		 */
+		
 		private function startGame():void
 		{
 			// The event listeners for the game
@@ -132,7 +156,7 @@ package Game
 			stage.addEventListener(KeyboardEvent.KEY_UP, keyupFunction);
 			
 			
-			level_1 = new Level(rootDisplay, "Level 1", xmlData);
+			level_1 = new Level(rootDisplay, "Level 1", xmlData, GAME_WIDTH, GAME_HEIGHT);
 			rootDisplay.addChildAt(level_1, 0);
 			
 			player = new Player(rootDisplay, xmlData);
@@ -143,6 +167,12 @@ package Game
 			//errorDisplay(xmlData);
 		}
 		
+		/**
+		 * The Main Game Loop, this is called as fast as AS3 can.
+		 * 
+		 * @param   event The Enter Frame listener object.
+		 * @return  N/A
+		 */
 		private function gameLoop(event:Event):void
 		{
 			if(gameTime == 0)
@@ -156,14 +186,18 @@ package Game
 			
 			var timeDecimal:Number = Number(timeDifference) * .01;
 			
+			//level_1.update(timeDecimal);
+			
 			if(leftButton)
 			{
 				player.moveLeft(timeDecimal);
+				level_1.scrollBackgroundRight(timeDecimal);
 			}
 			
 			if(rightButton)
 			{
 				player.moveRight(timeDecimal);
+				level_1.scrollBackgroundLeft(timeDecimal);
 			}
 			
 			if(spacebarButton || player.jumping)
@@ -171,6 +205,12 @@ package Game
 				player.jump(timeDecimal);
 			}
 		}
+		
+		/**
+		 * Loads the XML file, GameVars.xml.  Upon being loaded, the game will continue to load its additional components.
+		 * 
+		 * @return  N/A
+		 */
 		
 		private function loadXML()
 		{
@@ -180,7 +220,14 @@ package Game
 			xmlLoader.addEventListener(Event.COMPLETE, xmlLoaded);
 		}
 		
-		function xmlLoaded(event:Event)
+		/**
+		 * When the XML file is loaded, this function is called internally.  
+		 * 
+		 * @param   event  Event Complete notification of the XML file is completly loaded.
+		 * @return  N/A
+		 */
+		
+		private function xmlLoaded(event:Event)
 		{
 			xmlData = XML(event.target.data);
 			startGame();

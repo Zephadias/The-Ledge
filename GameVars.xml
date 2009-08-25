@@ -28,7 +28,7 @@
 				images/background_1.png
 			</file>
 			<scrollspeed>
-				1
+				15
 			</scrollspeed>
 		</background_1>
 		<background_2>
@@ -36,7 +36,7 @@
 				images/background_2.png
 			</file>
 			<scrollspeed>
-				2
+				20
 			</scrollspeed>
 		</background_2>
 		<foreground_1>
@@ -44,7 +44,7 @@
 				images/foreground_1.png
 			</file>
 			<scrollspeed>
-				3
+				19
 			</scrollspeed>
 		</foreground_1>
 		<foreground_2>
@@ -52,7 +52,7 @@
 				images/foreground_2.png
 			</file>
 			<scrollspeed>
-				4
+				14
 			</scrollspeed>
 		</foreground_2>
 	</level>
