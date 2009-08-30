@@ -137,8 +137,7 @@ package Game
 		public function TheLedge() 
 		{ 
 			// Set debugger properties
-			debuggerProperties(false);
-						
+			debuggerProperties(false);	
 			loadXML();
 		}
 		
@@ -154,17 +153,15 @@ package Game
 			this.addEventListener(Event.ENTER_FRAME, gameLoop);
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, keydownFunction);
 			stage.addEventListener(KeyboardEvent.KEY_UP, keyupFunction);
-			
-			
-			level_1 = new Level(rootDisplay, "Level 1", xmlData, GAME_WIDTH, GAME_HEIGHT);
+		
+			level_1 = new Level(rootDisplay, "Level 1", GAME_WIDTH, GAME_HEIGHT, xmlData);
 			rootDisplay.addChildAt(level_1, 0);
+			level_1.addBackground("background_closest");
+			player = new Player(rootDisplay, level_1, xmlData);
+			level_1.attachPlayer(player, 0, 0);
 			
-			player = new Player(rootDisplay, xmlData);
-			player.levelHeight = GAME_HEIGHT;
-			player.levelWidth = GAME_WIDTH;
-			
-			level_1.attachPlayer(player, 100, GAME_HEIGHT-100);
 			//errorDisplay(xmlData);
+			level_1.findLedges();
 		}
 		
 		/**
@@ -186,23 +183,26 @@ package Game
 			
 			var timeDecimal:Number = Number(timeDifference) * .01;
 			
-			//level_1.update(timeDecimal);
-			
+			player.update(timeDifference);
 			if(leftButton)
 			{
 				player.moveLeft(timeDecimal);
-				level_1.scrollBackgroundRight(timeDecimal);
+				level_1.scrollRight(timeDecimal);
 			}
 			
 			if(rightButton)
 			{
 				player.moveRight(timeDecimal);
-				level_1.scrollBackgroundLeft(timeDecimal);
+				level_1.scrollLeft(timeDecimal);
+				
 			}
-			
-			if(spacebarButton || player.jumping)
+			if (spacebarButton)
 			{
-				player.jump(timeDecimal);
+				if (!player.inAir)
+				{
+					errorDisplay('JUMP');
+					player.jump = true;
+				}
 			}
 		}
 		

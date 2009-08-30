@@ -26,17 +26,22 @@ package Engine
 		private var foreground_closest:Background;
 		private var foreground_furthest:Background;
 		
-		private var levelWidth:uint;
-		private var levelHeight:uint;
-		private var levelEdge:uint;
+		private var _levelWidth:uint;
+		private var _levelHeight:uint;
+		private var _levelEdge:uint;
+		private var scrollSpeed:uint;
 		
 		public var pause:Boolean;
+		
+		private var _gravity:Number = 0.004;
 		
 		private var rootDisplay:Object;
 		
 		private var xmlData:XML;
 		
 		private var player:Player;
+		
+		public var ledgeArray:Array;
 		
 		/**
 		 * The level constructor.  Level's contain all the prop objects and background/foregrounds.
@@ -49,24 +54,88 @@ package Engine
 		 * @return  N/A
 		 */
 		
-		public function Level(pRootDisplay:Object, pLevelTitle:String, pXML:XML, pLevelWidth:uint, pLevelHeight:uint) 
+		//public function Level(pRootDisplay:Object, pLevelTitle:String, pXML:XML, pLevelWidth:uint, pLevelHeight:uint) 
+		public function Level(pRootDisplay:Object, pLevelTitle:String, pLevelWidth:uint, pLevelHeight:uint, pXML:XML) 
 		{ 
 			rootDisplay = pRootDisplay;
 			_levelTitle = pLevelTitle;
 			levelActive = false;
 			propArray = new Array();
+			ledgeArray = new Array();
 			xmlData = pXML;
-			background_furthest = new Background(rootDisplay, "background_furthest", xmlData.level.background_1.file, xmlData.level.background_1.scrollspeed, levelWidth, levelHeight);
-			background_closest = new Background(rootDisplay, "background_closest", xmlData.level.background_2.file, xmlData.level.background_2.scrollspeed, levelWidth, levelHeight);
-			foreground_closest = new Background(rootDisplay, "foreground_closest", xmlData.level.foreground_1.file, xmlData.level.foreground_1.scrollspeed, levelWidth, levelHeight);
-			foreground_furthest = new Background(rootDisplay, "foreground_furthest", xmlData.level.foreground_2.file, xmlData.level.foreground_2.scrollspeed, levelWidth, levelHeight);
-			this.addChildAt(background_furthest, 0);
-			this.addChildAt(background_closest, 1);
-			this.addChildAt(foreground_closest, 2);
+			//background_furthest = new Background(rootDisplay, "background_furthest", xmlData.level.background_1.file, xmlData.level.background_1.scrollspeed, levelWidth, levelHeight);
+			//background_closest = new Background(rootDisplay, "background_closest", xmlData.level.background_2.file, xmlData.level.background_2.scrollspeed, levelWidth, levelHeight);
+			//foreground_closest = new Background(rootDisplay, "foreground_closest", xmlData.level.foreground_1.file, xmlData.level.foreground_1.scrollspeed, levelWidth, levelHeight);
+			//foreground_furthest = new Background(rootDisplay, "foreground_furthest", xmlData.level.foreground_2.file, xmlData.level.foreground_2.scrollspeed, levelWidth, levelHeight);
+			//this.addChildAt(background_furthest, 0);
+			//this.addChildAt(background_closest, 1);
+			//this.addChildAt(foreground_closest, 2);
 			
-			levelWidth = pLevelWidth;
-			levelHeight = pLevelHeight;
-			levelEdge = pLevelWidth/2;
+			_levelWidth = pLevelWidth;
+			_levelHeight = pLevelHeight;
+			_levelEdge = pLevelWidth / 2;
+			scrollSpeed = xmlData.level.scrollspeed;
+		}
+		
+		public function addBackground(pLocation:String):void
+		{
+			for ( var i:int = rootDisplay.numChildren - 1; i >= 0; i-- )		
+			{
+				if (rootDisplay.getChildAt(i).toString() == "[object " + pLocation + "]")
+				{
+					errorDisplay("FOUND " + pLocation.toUpperCase() + "!!!");
+					if ( pLocation == "background_furthest" )
+					{
+						//background_furthest = new Background(rootDisplay, pLocation, pObject, xmlData.level.background_furthest.scrollspeed, this);
+						//background_furthest.setProperties(rootDisplay, pLocation, pObject, xmlData.level.background_furthest.scrollspeed, this);
+					}
+					else if ( pLocation == "background_closest" )
+					{
+						background_closest = rootDisplay.getChildAt(i);
+						background_closest.setProperties(rootDisplay, "background_closest", xmlData.level.background_closest.scrollspeed, this);
+					}
+					else if ( pLocation == "foreground_closest" )
+					{
+						
+					}
+					else if ( pLocation == "foreground_furthest" )
+					{
+						
+					}
+				}
+			}
+		}
+		
+		public function findLedges():void
+		{
+			for ( var i:int = rootDisplay.numChildren - 1; i >= 0; i-- )		
+			{
+				if (rootDisplay.getChildAt(i).valueOf() is Ledge)
+				{
+					ledgeArray.push(rootDisplay.getChildAt(i));
+					//errorDisplay("FOUND A LEDGE");
+				}
+			}
+		}
+		
+		public function get gravity():Number
+		{
+			return _gravity;
+		}
+		
+		public function get levelWidth():uint
+		{
+			return _levelWidth;
+		}
+		
+		public function get levelHeight():uint
+		{
+			return _levelHeight;
+		}
+		
+		public function get levelEdge():uint
+		{
+			return _levelEdge;
 		}
 		
 		/**
@@ -80,11 +149,11 @@ package Engine
 		
 		public function attachPlayer(pPlayer:Player, xLoc:int, yLoc:int):void
 		{
-			this.addChildAt(pPlayer, 3);
+			rootDisplay.addChild(pPlayer);
 			pPlayer.x = xLoc;
 			pPlayer.y = yLoc;
 			player = pPlayer;
-			attachForeground(-100);
+			//attachForeground(-100);
 		}
 		
 		/**
@@ -119,16 +188,20 @@ package Engine
 		 * @param   pTime The lag time.
 		 * @return  N/A
 		 */
-		
-		public function scrollBackgroundLeft(pTime:Number):void
+		public function scrollLeft(pTime:Number):void
 		{
-			if(player.x+player.width >= levelEdge)
+			if(player.x+player.width >= _levelEdge)
 			{
-				background_furthest.scrollLeft(pTime);
+				//background_furthest.scrollLeft(pTime);
 				background_closest.scrollLeft(pTime);
-				foreground_furthest.scrollLeft(pTime);
-				foreground_closest.scrollLeft(pTime);
+				//foreground_furthest.scrollLeft(pTime);
+				//foreground_closest.scrollLeft(pTime);
+				for each (var ledge:Ledge in ledgeArray)
+				{
+					ledge.x -= scrollSpeed * pTime;
+				}
 			}
+		
 		}
 		
 		/**
@@ -137,17 +210,22 @@ package Engine
 		 * @param   pTime The lag time.
 		 * @return  N/A
 		 */
-		 
-		public function scrollBackgroundRight(pTime:Number):void
+		public function scrollRight(pTime:Number):void
 		{
 			if((player.x - player.width) <= 0)
 			{
-				background_furthest.scrollRight(pTime);
+				//background_furthest.scrollRight(pTime);
 				background_closest.scrollRight(pTime);
-				foreground_furthest.scrollRight(pTime);
-				foreground_closest.scrollRight(pTime);
+				//foreground_furthest.scrollRight(pTime);
+				//foreground_closest.scrollRight(pTime);
+
+				for each (var ledge:Ledge in ledgeArray)
+				{
+					ledge.x += scrollSpeed * pTime;
+				}
 			}
 		}
+		
 		
 		/**
 		 * An update function to call every frame.

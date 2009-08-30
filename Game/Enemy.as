@@ -16,10 +16,10 @@ package Game
 	
 	public class Enemy extends MovieClip
 	{
-		public var health:int;
-		public var damage:int;
+		public var health:uint;
+		public var damage:uint;
 		public var isAttacking:Boolean;
-		public var jumpHeight:int;
+		public var jumpHeight:uint;
 		public var rangedWeapon:Weapon;
 		public var physicalWeapon:Weapon;
 		
@@ -32,7 +32,7 @@ package Game
 		
 		public function Enemy(pRootDisplay:MovieClip) 
 		{ 
-				rootDisplay = pRootDisplay;
+			rootDisplay = pRootDisplay;
 				
 			_bottomY = this.height;
 			_topY = 0;

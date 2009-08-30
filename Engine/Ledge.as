@@ -15,6 +15,7 @@ package Engine
 	import flash.utils.Timer;
 	import flash.events.TimerEvent;
 	import flash.events.Event;
+	import Game.*;
 	
 	public class Ledge extends MovieClip
 	{
@@ -22,37 +23,28 @@ package Engine
 		private var gameLevel:Level;
 		private var rootDisplay:Object;
 		private var _ledgeType:String;
-		private var _ID:int;
+		private var _ID:uint;
 		
 		private var _bottomY:Number;
 		private var _topY:Number;
 		private var _leftX:Number;
 		private var _rightX:Number;
 		
-		public function Ledge(rootMC:Object ,pLevel:Level, vis:Boolean) 
-		{ 
-			rootDisplay = rootMC;
-			gameLevel = pLevel;
-			isVisible = vis;
-			
+		public function Ledge() 
+		{ 			
 			_bottomY = this.height;
 			_topY = 0;
 			_leftX = 0;
 			_rightX = this.width;
 		}
 		
-		public function spawn(xLoc:int, yLoc:int):Void
+		public function spawn(xLoc:int, yLoc:int):void
 		{
 			this.x = xLoc;
 			this.y = yLoc;
 		}
-		
-		public function fadeIn(pStartTime:Number, pEndTime:Number):Void
-		{
-			
-		}
-		
-		public function setLocation(xLoc:int, yLoc:int):Void
+				
+		public function setLocation(xLoc:int, yLoc:int):void
 		{
 			this.x = xLoc;
 			this.y = yLoc;
@@ -172,7 +164,7 @@ package Engine
 			return _ledgeType;
 		}
 		
-		public function set ledgeType(pLedgeType:String):Void
+		public function set ledgeType(pLedgeType:String):void
 		{
 			_ledgeType = pLedgeType;
 		}

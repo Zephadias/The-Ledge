@@ -20,92 +20,151 @@ package Game
 	
 	public class Player extends MovieClip
 	{
-		public var health:int;
-		public var money:int;
+		public var health:uint;
+		public var money:uint;
 		public var rangedWeapon:Weapon;
 		public var physicalWeapon:Weapon;
 		
-		public var jumping:Boolean = false;
-		var jumpSpeedMax:int;
-		var jumpPercent:Number;
-		var jumpQuickness:int;
-		var jumpSpeed:Number;
+		//private var gravity:Number = .004;
 		
-		public var speed:int;
+		public var jumping:Boolean = false;
+		private var jumpSpeed:Number;
+		
+		public var speed:uint;
+		private var dx:Number;
+		private var dy:Number;
+		public var inAir:Boolean;
 		
 		private var _bottomY:Number;
 		private var _topY:Number;
 		private var _leftX:Number;
 		private var _rightX:Number;
-		
-		public var levelHeight:int;
-		public var levelWidth:int;
-		
+			
 		private var image:Bitmap;
 		
 		private var xmlData:XML;
+		public var jump:Boolean;
 				
+		private var level:Level;
+		private var ledgeArray:Array;
+		
 		private var rootDisplay:Object;
 		
-		public function Player(pRootDisplay:Object, xml:XML) 
+		//public function Player(pRootDisplay:Object, xml:XML) 
+		public function Player(pRootDisplay:Object, pLevel:Level, xml:XML)
 		{ 
 			rootDisplay = pRootDisplay;
 			_bottomY = this.height;
 			_topY = 0;
 			_leftX = 0;
 			_rightX = this.width;
-			speed = 0;
+			dx = 0.0;
+			dy = 0.0;
+			inAir = false;
+			jump = false;
+			level = pLevel;
+			ledgeArray = level.ledgeArray;
 			xmlData = xml;
+			//rootDisplay.addChild(this);
 			extractXML();
 		}
 		
-		private function loadImage(callFunction:Function, file:String)
+		/*private function loadImage(callFunction:Function, file:String)
 		{
 			var loader:Loader = new Loader();
 			var request:URLRequest;
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, callFunction);
 			request = new URLRequest(file);
 			loader.load(request);
-		}
+		}*/
 		
-		private function playerImageLoaded(event:Event):void
+		/*private function playerImageLoaded(event:Event):void
 		{
 			image = Bitmap(event.target.loader.content);
 			this.addChild(image);
-		}
+		}*/
 		
 		private function extractXML():void
 		{
 			speed = xmlData.player.speed;
-			jumpSpeedMax = xmlData.player.jumpspeedmax;
-			jumpPercent = xmlData.player.jumppercent;
-			jumpQuickness = xmlData.player.jumpquickness;
-			jumpSpeed = jumpSpeedMax;
-			loadImage(playerImageLoaded, xmlData.player.file);
+			jumpSpeed = xmlData.player.jumpspeed;
+			//loadImage(playerImageLoaded, xmlData.player.file);
 		}
 		
-		public function update():void
+		public function update(pTime:Number):void
 		{
-	
-		}
-		
-		public function moveLeft(time:Number):void 
-		{
-			if( !( (this.x - (speed*time)) <= 0))
+			if (pTime < 1) return;
+			
+			var verticalChange:Number = this.dy * pTime + pTime * level.gravity;
+			
+			if (verticalChange > 15.0)
+				verticalChange  = 15.0;
+			this.dy += pTime * level.gravity;
+			
+			if (this.jump)
 			{
-				this.x -= speed*time;
+				this.jump = false;
+				this.dy = -this.jumpSpeed;
+				verticalChange = -this.jumpSpeed;
+			}
+			
+			this.inAir = true;
+			
+			var newY:Number = this.y + verticalChange;
+			
+			for ( var i:int = ledgeArray.length - 1; i >= 0; i-- )
+			{
+				if ((this.x+this.width/2 > ledgeArray[i].x) && ((this.x - this.width/2) < (ledgeArray[i].x + ledgeArray[i].width))) 
+				{
+					if (( this.y  <= ledgeArray[i].y ) && newY > ledgeArray[i].y) 
+					{
+						newY = ledgeArray[i].y;
+						this.dy = 0;
+						this.inAir = false;	
+					}
+				}
+			}
+			
+			this.y = newY;
+		}
+		
+		/**
+		 * Move the player to the left.
+		 * 
+		 * @param   pTime The time since this update was last called.
+		 * @return  
+		 */
+		
+		public function moveLeft(pTime:Number):void 
+		{
+			if( !( (this.x - (speed*pTime)) <= 0))
+			{
+				this.x -= speed*pTime;
 			}
 		}
 		
-		public function moveRight(time:Number):void 
+		/**
+		 * Move the player to the right.
+		 * 
+		 * @param   pTime The time since this update was last called.
+		 * @return  N/A
+		 */
+		
+		public function moveRight(pTime:Number):void 
 		{
-			if( !( (this.x + (this.width/2) + (speed*time) ) >= (levelWidth - levelWidth/2) ) )
+			if( !( (this.x + (this.width/2) + (speed*pTime) ) >= (level.levelWidth - level.levelWidth/4) ) )
 			{
-				this.x += speed*time;
+				this.x += speed*pTime;
 			}
 		}
 		
-		public function jump(time:Number):void
+		/**
+		 * Make the player jump.  Use Jumpspeedmax, jumpquickness, jumppercent in the GameVars.xml file.
+		 * 
+		 * @return  N/A
+		 */
+		/*
+		public function jump():void
 		{
 			if(!jumping)
 			{
@@ -128,8 +187,9 @@ package Game
 					jumpSpeed *= 1 + jumpSpeedMax/50;
 				}
 				this.y += jumpSpeed;
-				//if main hits the floor, then stop jumping
-				//of course, we'll change this once we create the level
+				
+				
+				
 				if(this.y >= levelHeight - this.height)
 				{
 					jumping = false;
@@ -137,7 +197,7 @@ package Game
 				}
 			}
 		}
-		
+		*/
 		public function checkCollision(pObject:Object):Boolean
 		{
 			return false;

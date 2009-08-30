@@ -9,10 +9,10 @@
 /*
 /**********************************************************/
 
-package Game 
+package Engine 
 {
 	import flash.display.*;
-	import Engine.*;
+	import Game.*;
 	
 	public class Prop extends MovieClip
 	{

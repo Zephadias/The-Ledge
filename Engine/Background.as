@@ -11,15 +11,14 @@
 
 package Engine 
 {
-	import flash.display.*;
-	
+	import flash.display.*;	
 	import flash.events.*;
 	import flash.net.URLRequest;
 	import flash.net.URLLoader;
 	
 	import Game.*;
 	
-	public class Background extends Sprite
+	public class Background extends MovieClip
 	{
 		private var _backgroundTitle:String;
 		private var scrollLeftSpeed:uint;
@@ -27,12 +26,27 @@ package Engine
 		private var scrollUpSpeed:uint;
 		private var scrollDownSpeed:uint;
 		
-		private var levelWidth:uint;
-		private var levelHeight:uint;
+		private var level:Level;
 		
 		private var image:Bitmap;
 			
 		private var rootDisplay:Object;
+		
+		public function Background()
+		{
+			
+		}
+		
+		public function setProperties(pRootDisplay:Object, pName:String, pScrollSpeed:uint, pLevel:Level)
+		{
+				rootDisplay = pRootDisplay;
+				level = pLevel;
+				_backgroundTitle = pName;
+				scrollLeftSpeed = pScrollSpeed;
+				scrollRightSpeed = pScrollSpeed;
+				scrollDownSpeed = pScrollSpeed;
+				scrollUpSpeed = pScrollSpeed;
+		}
 		
 		/**
 		 * Background holds the graphic image of one of the 4 background objects that exists.  This background object can be scrolled at variuos speeds.
@@ -46,18 +60,18 @@ package Engine
 		 * @return  N/A
 		 */
 		
-		public function Background(rootMC:Object, pName:String, imageFile:String, pScrollSpeed:uint, pLevelWidth:uint, pLevelHeight:uint) 
+		/*public function Background(rootMC:Object, pName:String, imageFile:Object, pScrollSpeed:uint, pLevel:Level) 
 		{
 			rootDisplay = rootMC;
-			levelWidth = pLevelWidth;
-			levelHeight = pLevelHeight;
+			level = pLevel;
 			_backgroundTitle = pName;
 			scrollLeftSpeed = pScrollSpeed;
 			scrollRightSpeed = pScrollSpeed;
 			scrollUpSpeed = pScrollSpeed;
 			scrollDownSpeed = pScrollSpeed;
-			loadImage(imageLoaded, imageFile);
-		}
+			
+			//loadImage(imageLoaded, imageFile);
+		}*/
 		
 		/**
 		 * Load the image file into the background object.
@@ -136,7 +150,8 @@ package Engine
 		 
 		public function scrollRight(pTime:Number):void
 		{
-			this.x += scrollRightSpeed*pTime;
+			if(this.x <= -10)
+				this.x += scrollRightSpeed*pTime;
 		}
 		
 		/**

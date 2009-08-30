@@ -3,57 +3,39 @@
 		<speed>
 			30
 		</speed>
-		<jumpquickness>
-			2
-		</jumpquickness>
-		<jumpspeedmax>
-			15
-		</jumpspeedmax>
-		<jumppercent>
+		<jumpspeed>
 			0.8
-		</jumppercent>
+		</jumpspeed>
 		<health>
 			100
 		</health>
 		<money>
 			10
 		</money>
-		<file>
-			images/player.png
-		</file>
 	</player>
 	<level>
-		<background_1>
-			<file>
-				images/background_1.png
-			</file>
+		<scrollspeed>
+			20
+		</scrollspeed>
+		<background_furthest>
 			<scrollspeed>
 				15
 			</scrollspeed>
-		</background_1>
-		<background_2>
-			<file>
-				images/background_2.png
-			</file>
+		</background_furthest>
+		<background_closest>
 			<scrollspeed>
 				20
 			</scrollspeed>
-		</background_2>
-		<foreground_1>
-			<file>
-				images/foreground_1.png
-			</file>
+		</background_closest>
+		<foreground_furthest>
 			<scrollspeed>
 				19
 			</scrollspeed>
-		</foreground_1>
-		<foreground_2>
-			<file>
-				images/foreground_2.png
-			</file>
+		</foreground_furthest>
+		<foreground_closest>
 			<scrollspeed>
 				14
 			</scrollspeed>
-		</foreground_2>
+		</foreground_closest>
 	</level>
 </game>
