@@ -51,6 +51,7 @@ Group: Engine  {
    File: Background  (Engine\Background.as)
    File: Ledge  (Engine\Ledge.as)
    File: Level  (Engine\Level.as)
+   File: Prop  (Engine\Prop.as)
    File: TriggerEvent  (Engine\TriggerEvent.as)
    }  # Group: Engine
 
@@ -59,11 +60,12 @@ Group: Game  {
    File: Enemy  (Game\Enemy.as)
    File: Player  (Game\Player.as)
    File: Projectile  (Game\Projectile.as)
-   File: Prop  (Game\Prop.as)
    File: TheLedge  (Game\TheLedge.as)
    File: TL  (Game\TL.as)
    File: Weapon  (Game\Weapon.as)
    }  # Group: Game
+
+File: Main  (src\Main.as)
 
 Group: Index  {
 
