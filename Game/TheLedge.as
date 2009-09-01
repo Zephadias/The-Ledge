@@ -161,7 +161,7 @@ package Game
 			level_1.attachPlayer(player, 0, 0);
 			
 			//errorDisplay(xmlData);
-			level_1.findLedges();
+			level_1.findResources();
 		}
 		
 		/**
@@ -182,8 +182,10 @@ package Game
 			gameTime += timeDifference;
 			
 			var timeDecimal:Number = Number(timeDifference) * .01;
-			
+		
 			player.update(timeDifference);
+			level_1.update(timeDecimal);
+			
 			if(leftButton)
 			{
 				player.moveLeft(timeDecimal);
@@ -314,12 +316,12 @@ package Game
 		{
 			if(event.keyCode == LEFT)
 			{
-				errorDisplay("LEFT");
+				//errorDisplay("LEFT");
 				leftButton = true;
 			}
 			else if(event.keyCode == RIGHT)
 			{
-				errorDisplay("RIGHT");
+				//errorDisplay("RIGHT");
 				rightButton = true;
 			}
 	

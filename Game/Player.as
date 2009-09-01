@@ -20,6 +20,7 @@ package Game
 	
 	public class Player extends MovieClip
 	{
+		public const HEALTH_CONST:uint = 5475;
 		public var health:uint;
 		public var money:uint;
 		public var rangedWeapon:Weapon;
@@ -88,6 +89,7 @@ package Game
 		{
 			speed = xmlData.player.speed;
 			jumpSpeed = xmlData.player.jumpspeed;
+			health = xmlData.player.health;
 			//loadImage(playerImageLoaded, xmlData.player.file);
 		}
 		
@@ -137,7 +139,7 @@ package Game
 		
 		public function moveLeft(pTime:Number):void 
 		{
-			if( !( (this.x - (speed*pTime)) <= 0))
+			if( !( (this.x - this.width/4 - (speed*pTime)) <= 0))
 			{
 				this.x -= speed*pTime;
 			}
@@ -158,46 +160,6 @@ package Game
 			}
 		}
 		
-		/**
-		 * Make the player jump.  Use Jumpspeedmax, jumpquickness, jumppercent in the GameVars.xml file.
-		 * 
-		 * @return  N/A
-		 */
-		/*
-		public function jump():void
-		{
-			if(!jumping)
-			{
-				jumping = true;
-				jumpSpeed = -jumpSpeedMax;
-				this.y += jumpSpeed;
-			} 
-			else 
-			{
-				if(jumpSpeed < 0)
-				{
-					jumpSpeed *= jumpPercent;
-					if(jumpSpeed > -jumpQuickness)
-					{
-						jumpSpeed = -jumpSpeed;
-					}
-				}
-				if(jumpSpeed > 0 && jumpSpeed <= jumpSpeedMax)
-				{
-					jumpSpeed *= 1 + jumpSpeedMax/50;
-				}
-				this.y += jumpSpeed;
-				
-				
-				
-				if(this.y >= levelHeight - this.height)
-				{
-					jumping = false;
-					this.y = levelHeight - this.height;
-				}
-			}
-		}
-		*/
 		public function checkCollision(pObject:Object):Boolean
 		{
 			return false;

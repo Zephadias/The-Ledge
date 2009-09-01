@@ -21,6 +21,7 @@ package Engine
 		private var _topY:Number;
 		private var _leftX:Number;
 		private var _rightX:Number;
+		private var rootDisplay:Object;
 		
 		public function Prop() 
 		{ 
@@ -30,29 +31,28 @@ package Engine
 			_rightX = this.width;
 		}
 		
-		
-		
-		public function update():Void
+		public function update():void
 		{
-			
+
 		}
 		
-		public function checkCollision(pObject:Object):Boolean
+		public function checkCollisions(pPlayer:Player):Boolean
 		{
-			
+			return false;
 		}
 		
 		public function pickUp():Prop
 		{
-			
+			errorDisplay('Picked Up prop');
+			return this;
 		}
 		
-		public function spawn(pXloc:Number, pYLoc:Number):Void
+		public function spawn(pXloc:Number, pYLoc:Number):void
 		{
 			
 		}
 		
-		public function setLocation(pXLoc:Number, pYLoc:Number):Void
+		public function setLocation(pXLoc:Number, pYLoc:Number):void
 		{
 			this.x = pXLoc;
 			this.y = pYLoc;
@@ -62,7 +62,7 @@ package Engine
 		* Output text to the debugging console
 		* @param arg The output to the debugger 
 		*/
-		private function errorDisplay(arg:*):void
+		protected function errorDisplay(arg:*):void
 		{
 			rootDisplay.debugger.appendText(arg + '\n');
 			rootDisplay.debugger.verticalScrollPosition = rootDisplay.debugger.maxVerticalScrollPosition;
@@ -71,7 +71,7 @@ package Engine
 		/**
 		* Print all the Prop info to the debugging console
 		*/
-		public function printInfo():void
+		protected function printInfo():void
 		{
 			errorDisplay("--------------------------------");
 			errorDisplay("Prop Information");

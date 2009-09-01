@@ -43,6 +43,8 @@ package Engine
 		
 		public var ledgeArray:Array;
 		
+		public var pledgetArray:Array;
+		
 		/**
 		 * The level constructor.  Level's contain all the prop objects and background/foregrounds.
 		 * 
@@ -62,6 +64,7 @@ package Engine
 			levelActive = false;
 			propArray = new Array();
 			ledgeArray = new Array();
+			pledgetArray = new Array();
 			xmlData = pXML;
 			//background_furthest = new Background(rootDisplay, "background_furthest", xmlData.level.background_1.file, xmlData.level.background_1.scrollspeed, levelWidth, levelHeight);
 			//background_closest = new Background(rootDisplay, "background_closest", xmlData.level.background_2.file, xmlData.level.background_2.scrollspeed, levelWidth, levelHeight);
@@ -106,14 +109,22 @@ package Engine
 			}
 		}
 		
-		public function findLedges():void
+		public function findResources():void
 		{
+			errorDisplay('finding resources');
 			for ( var i:int = rootDisplay.numChildren - 1; i >= 0; i-- )		
 			{
-				if (rootDisplay.getChildAt(i).valueOf() is Ledge)
+				var tempItem = rootDisplay.getChildAt(i).valueOf();
+				if (tempItem is Ledge)
 				{
 					ledgeArray.push(rootDisplay.getChildAt(i));
 					//errorDisplay("FOUND A LEDGE");
+				}
+				if (tempItem is Pledget )
+				{
+					errorDisplay('found a pledget');
+					pledgetArray.push(rootDisplay.getChildAt(i));
+					errorDisplay(pledgetArray.length);
 				}
 			}
 		}
@@ -190,15 +201,20 @@ package Engine
 		 */
 		public function scrollLeft(pTime:Number):void
 		{
-			if(player.x+player.width >= _levelEdge)
+			if(player.x+player.width/2 >= _levelEdge)
 			{
 				//background_furthest.scrollLeft(pTime);
 				background_closest.scrollLeft(pTime);
 				//foreground_furthest.scrollLeft(pTime);
 				//foreground_closest.scrollLeft(pTime);
+				
 				for each (var ledge:Ledge in ledgeArray)
 				{
 					ledge.x -= scrollSpeed * pTime;
+				}
+				for each (var prop:Prop in pledgetArray)
+				{
+					prop.x -= scrollSpeed * pTime;
 				}
 			}
 		
@@ -214,15 +230,23 @@ package Engine
 		{
 			if((player.x - player.width) <= 0)
 			{
+				if (background_closest.x <= -5)
+				{
+				
+					for each (var ledge:Ledge in ledgeArray)
+					{
+						ledge.x += scrollSpeed * pTime;
+					}
+					for each (var prop:Prop in pledgetArray)
+					{
+						prop.x += scrollSpeed * pTime;
+					}
+				}
 				//background_furthest.scrollRight(pTime);
 				background_closest.scrollRight(pTime);
 				//foreground_furthest.scrollRight(pTime);
 				//foreground_closest.scrollRight(pTime);
-
-				for each (var ledge:Ledge in ledgeArray)
-				{
-					ledge.x += scrollSpeed * pTime;
-				}
+				
 			}
 		}
 		
@@ -235,8 +259,15 @@ package Engine
 		 */
 		public function update(pTime:Number):void
 		{
-			
-			
+			for ( var i:int = pledgetArray.length - 1; i >= 0; i-- )
+			{
+				if (pledgetArray[i].checkCollisions(player))
+				{
+					rootDisplay.removeChild(pledgetArray[i]);
+					pledgetArray.splice(i, 1);
+					break;
+				}
+			}
 		}
 		
 		/**

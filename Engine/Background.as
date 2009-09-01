@@ -49,31 +49,6 @@ package Engine
 		}
 		
 		/**
-		 * Background holds the graphic image of one of the 4 background objects that exists.  This background object can be scrolled at variuos speeds.
-		 * 
-		 * @param   rootMC    		A link to the root display object.   
-		 * @param   pName        	The name of the background image.
-		 * @param   imageFile    	The locatino of the image file that is being loaded into this background.
-		 * @param   pScrollSpeed 	The generic scroll speed of all the scroll directions.
-		 * @param   pLevelWidth  	The width of the game in pixels.
-		 * @param   pLevelHeight 	The height of the game in pixels.
-		 * @return  N/A
-		 */
-		
-		/*public function Background(rootMC:Object, pName:String, imageFile:Object, pScrollSpeed:uint, pLevel:Level) 
-		{
-			rootDisplay = rootMC;
-			level = pLevel;
-			_backgroundTitle = pName;
-			scrollLeftSpeed = pScrollSpeed;
-			scrollRightSpeed = pScrollSpeed;
-			scrollUpSpeed = pScrollSpeed;
-			scrollDownSpeed = pScrollSpeed;
-			
-			//loadImage(imageLoaded, imageFile);
-		}*/
-		
-		/**
 		 * Load the image file into the background object.
 		 * 
 		 * @param   callFunction The function to call once the image has been loaded into memory.
@@ -150,8 +125,11 @@ package Engine
 		 
 		public function scrollRight(pTime:Number):void
 		{
-			if(this.x <= -10)
-				this.x += scrollRightSpeed*pTime;
+			if (this.x <= -5)
+			{
+				//errorDisplay(this.x);
+				this.x += scrollRightSpeed * pTime;
+			}
 		}
 		
 		/**

@@ -51,6 +51,7 @@ Group: Engine  {
    File: Background  (Engine\Background.as)
    File: Ledge  (Engine\Ledge.as)
    File: Level  (Engine\Level.as)
+   File: Pledget  (Engine\Pledget.as)
    File: Prop  (Engine\Prop.as)
    File: TriggerEvent  (Engine\TriggerEvent.as)
    }  # Group: Engine
