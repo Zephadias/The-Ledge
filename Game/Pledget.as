@@ -1,8 +1,8 @@
-﻿package Engine
+﻿package Game
 {
 	
 	import flash.display.*;
-	import Game.*;
+	import Engine.*;
 	
 	public class Pledget extends Prop
 	{
@@ -24,9 +24,9 @@
 				}
 				else
 				{
-					trace('players health = ' + pPlayer.health);
+					super.errorDisplay('players health = ' + pPlayer.health);
 					pPlayer.health += this.amount;
-					trace('player picked up pledget.  Health is now: ' + pPlayer.health);
+					super.errorDisplay('player picked up pledget.  Health is now: ' + pPlayer.health);
 				}
 				return true;
 			}

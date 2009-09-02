@@ -21,7 +21,7 @@ package Engine
 		private var _topY:Number;
 		private var _leftX:Number;
 		private var _rightX:Number;
-		private var rootDisplay:Object;
+		private var _rootDisplay:Object;
 		
 		public function Prop() 
 		{ 
@@ -29,6 +29,11 @@ package Engine
 			_topY = 0;
 			_leftX = 0;
 			_rightX = this.width;
+		}
+		
+		public function set rootDisplay(pRootDisplay:Object):void
+		{
+			_rootDisplay = pRootDisplay;
 		}
 		
 		public function update():void
@@ -40,13 +45,7 @@ package Engine
 		{
 			return false;
 		}
-		
-		public function pickUp():Prop
-		{
-			errorDisplay('Picked Up prop');
-			return this;
-		}
-		
+			
 		public function spawn(pXloc:Number, pYLoc:Number):void
 		{
 			
@@ -64,8 +63,8 @@ package Engine
 		*/
 		protected function errorDisplay(arg:*):void
 		{
-			rootDisplay.debugger.appendText(arg + '\n');
-			rootDisplay.debugger.verticalScrollPosition = rootDisplay.debugger.maxVerticalScrollPosition;
+			_rootDisplay.debugger.appendText(arg + '\n');
+			_rootDisplay.debugger.verticalScrollPosition = _rootDisplay.debugger.maxVerticalScrollPosition;
 		}
 		
 		/**

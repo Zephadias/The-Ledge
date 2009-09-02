@@ -21,6 +21,7 @@ package Game
 	public class Player extends MovieClip
 	{
 		public const HEALTH_CONST:uint = 5475;
+		public const MONEY_CONST:uint = 1000;
 		public var health:uint;
 		public var money:uint;
 		public var rangedWeapon:Weapon;
@@ -49,6 +50,8 @@ package Game
 		private var level:Level;
 		private var ledgeArray:Array;
 		
+		public var isAttacking:Boolean;
+		
 		private var rootDisplay:Object;
 		
 		//public function Player(pRootDisplay:Object, xml:XML) 
@@ -65,6 +68,7 @@ package Game
 			jump = false;
 			level = pLevel;
 			ledgeArray = level.ledgeArray;
+			isAttacking = false;
 			xmlData = xml;
 			//rootDisplay.addChild(this);
 			extractXML();
@@ -90,6 +94,7 @@ package Game
 			speed = xmlData.player.speed;
 			jumpSpeed = xmlData.player.jumpspeed;
 			health = xmlData.player.health;
+			money = xmlData.player.money;
 			//loadImage(playerImageLoaded, xmlData.player.file);
 		}
 		
@@ -172,7 +177,36 @@ package Game
 		
 		public function physicalAttack():void
 		{
+			isAttacking = true;
+			this.gotoAndPlay(2);
+			var tempEnemyArray:Array = new Array();
+			var tempEnemyArrayCounter:Array = new Array();
+			for ( var j:int = level.enemyArray.length - 1; j >= 0; j-- )
+			{
+				if ( level.enemyArray[j].x <= this.x + 125 && level.enemyArray[j].x + 125 >= this.x)
+				{
+					tempEnemyArray.push(level.enemyArray[j]);
+					tempEnemyArrayCounter.push(j);
+				}
+			}
 			
+			for ( var i:int = tempEnemyArray.length - 1; i >= 0; i-- )
+			{
+				if (this.hitTestObject(tempEnemyArray[i]) && tempEnemyArray[i].x > (this.x+(this.width/4)) )
+				{
+					if (level.enemyArray[tempEnemyArrayCounter[i]].takeDamage(5))
+					{
+						rootDisplay.removeChild(level.enemyArray[tempEnemyArrayCounter[i]]);
+						level.enemyArray.splice(tempEnemyArrayCounter[i], 1);
+					}
+					else
+					{
+						errorDisplay('Enemy took damage.  Health is now: ' + level.enemyArray[tempEnemyArrayCounter[i]].health);
+					}
+				}
+			}
+			tempEnemyArray.splice(0);
+			tempEnemyArrayCounter.splice(0);
 		}
 		
 		public function spawn(pXLoc:Number, pYLoc:Number):void

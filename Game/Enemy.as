@@ -28,69 +28,81 @@ package Game
 		private var _leftX:Number;
 		private var _rightX:Number;
 		
-		private var rootDisplay:MovieClip;
+		private var _rootDisplay:Object;
 		
-		public function Enemy(pRootDisplay:MovieClip) 
+		public function Enemy() 
 		{ 
-			rootDisplay = pRootDisplay;
-				
 			_bottomY = this.height;
 			_topY = 0;
 			_leftX = 0;
 			_rightX = this.width;
 		}
 		
-		public function update():Void
+		public function set rootDisplay(pRootDisplay:Object):void
+		{
+			_rootDisplay = pRootDisplay;
+		}
+		
+		public function update():void
 		{
 			
+		}
+		
+		public function takeDamage(pDamage:uint):Boolean
+		{
+			if (this.health - pDamage <= 0)
+			{
+				this.health = 0;
+				return true;
+			}
+			else
+			{
+				this.health -= pDamage;
+			}
+			return false;
 		}
 		
 		public function checkCollision(pObject:Object):Boolean
 		{
-			
+			return false;
 		}
 		
-		private var moveLeft():Void
+		private function moveLeft():void
 		{
 			
 		}
 		
-		private var moveRight():Void
+		private function moveRight():void
+		{
+			
+		}
+				
+		private function rangedAttack():void
 		{
 			
 		}
 		
-		private var jump():Void
+		private function physicalAttack():void
 		{
 			
 		}
 		
-		private var rangedAttack():Void
+		public function getPlayersXLocation():Number
+		{
+			return 1;
+		}
+		
+		public function getPlayersYLocation():Number
+		{
+			return 1;
+		}
+		
+		private function destroy():void
 		{
 			
 		}
 		
-		private var physicalAttack():Void
-		{
-			
-		}
-		
-		public var getPlayersXLocation():Number
-		{
-			
-		}
-		
-		public var getPlayersYLocation():Number
-		{
-			
-		}
-		
-		private var destroy():Void
-		{
-			
-		}
-		
-		public var spawn(pXLoc:Number, pYLoc:Number):Void
+		public function spawn(pXLoc:Number, pYLoc:Number):void
 		{
 			
 		}
@@ -101,8 +113,8 @@ package Game
 		*/
 		private function errorDisplay(arg:*):void
 		{
-			rootDisplay.debugger.appendText(arg + '\n');
-			rootDisplay.debugger.verticalScrollPosition = rootDisplay.debugger.maxVerticalScrollPosition;
+			_rootDisplay.debugger.appendText(arg + '\n');
+			_rootDisplay.debugger.verticalScrollPosition = _rootDisplay.debugger.maxVerticalScrollPosition;
 		}
 		
 		/**
@@ -115,8 +127,8 @@ package Game
 			errorDisplay("Health: " + this.health);
 			errorDisplay("Damage: " + this.damage);
 			errorDisplay("Jump Height: " + this.jumpHeight);
-			errorDisplay("Ranged Weapon: " + rangedWeapon.toString());
-			errorDisplay("Physical Weapon: " + physicalWeapon.toString());
+			errorDisplay("Ranged Weapon: " + rangedWeapon);
+			errorDisplay("Physical Weapon: " + physicalWeapon);
 			errorDisplay("X Location: " + this.x);
 			errorDisplay("Y Location: " + this.y);
 			errorDisplay("--------------------------------");

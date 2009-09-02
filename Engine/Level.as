@@ -45,6 +45,10 @@ package Engine
 		
 		public var pledgetArray:Array;
 		
+		public var enemyArray:Array;
+		
+		public var moneyBagArray:Array;
+		
 		/**
 		 * The level constructor.  Level's contain all the prop objects and background/foregrounds.
 		 * 
@@ -65,6 +69,8 @@ package Engine
 			propArray = new Array();
 			ledgeArray = new Array();
 			pledgetArray = new Array();
+			enemyArray = new Array();
+			moneyBagArray = new Array();
 			xmlData = pXML;
 			//background_furthest = new Background(rootDisplay, "background_furthest", xmlData.level.background_1.file, xmlData.level.background_1.scrollspeed, levelWidth, levelHeight);
 			//background_closest = new Background(rootDisplay, "background_closest", xmlData.level.background_2.file, xmlData.level.background_2.scrollspeed, levelWidth, levelHeight);
@@ -122,9 +128,20 @@ package Engine
 				}
 				if (tempItem is Pledget )
 				{
-					errorDisplay('found a pledget');
 					pledgetArray.push(rootDisplay.getChildAt(i));
-					errorDisplay(pledgetArray.length);
+					pledgetArray[pledgetArray.length - 1].rootDisplay = rootDisplay;
+				}
+				
+				if ( tempItem is MoneyBag )
+				{
+					moneyBagArray.push(rootDisplay.getChildAt(i));
+					moneyBagArray[moneyBagArray.length - 1].rootDisplay = rootDisplay;
+				}
+				
+				if ( tempItem is Enemy )
+				{
+					enemyArray.push(rootDisplay.getChildAt(i));
+					enemyArray[enemyArray.length - 1].rootDisplay = rootDisplay;
 				}
 			}
 		}
@@ -216,6 +233,14 @@ package Engine
 				{
 					prop.x -= scrollSpeed * pTime;
 				}
+				for each (var enemy:Enemy in enemyArray)
+				{
+					enemy.x -= scrollSpeed * pTime;
+				}
+				for each (var moneyBag:MoneyBag in moneyBagArray)
+				{
+					moneyBag.x -= scrollSpeed * pTime;
+				}
 			}
 		
 		}
@@ -241,6 +266,14 @@ package Engine
 					{
 						prop.x += scrollSpeed * pTime;
 					}
+					for each (var enemy:Enemy in enemyArray)
+					{
+						enemy.x += scrollSpeed * pTime;
+					}
+					for each (var moneyBag:MoneyBag in moneyBagArray)
+					{
+						moneyBag.x += scrollSpeed * pTime;
+					}
 				}
 				//background_furthest.scrollRight(pTime);
 				background_closest.scrollRight(pTime);
@@ -265,6 +298,15 @@ package Engine
 				{
 					rootDisplay.removeChild(pledgetArray[i]);
 					pledgetArray.splice(i, 1);
+					break;
+				}
+			}
+			for ( i = moneyBagArray.length - 1; i >= 0; i-- )
+			{
+				if (moneyBagArray[i].checkCollisions(player))
+				{
+					rootDisplay.removeChild(moneyBagArray[i]);
+					moneyBagArray.splice(i, 1);
 					break;
 				}
 			}

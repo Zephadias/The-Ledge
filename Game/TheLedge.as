@@ -206,6 +206,11 @@ package Game
 					player.jump = true;
 				}
 			}
+			if ( physicalAttackButton )
+			{
+				if(!player.isAttacking)
+					player.physicalAttack();
+			}
 		}
 		
 		/**
@@ -304,6 +309,7 @@ package Game
 			else if(event.keyCode == PHYSICAL_ATTACK)
 			{
 				physicalAttackButton = false;
+				player.isAttacking = false;
 			}
 		
 		}	
