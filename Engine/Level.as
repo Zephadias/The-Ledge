@@ -49,6 +49,8 @@ package Engine
 		
 		public var moneyBagArray:Array;
 		
+		public var moneyPropArray:Array;
+		
 		/**
 		 * The level constructor.  Level's contain all the prop objects and background/foregrounds.
 		 * 
@@ -71,6 +73,7 @@ package Engine
 			pledgetArray = new Array();
 			enemyArray = new Array();
 			moneyBagArray = new Array();
+			moneyPropArray = new Array();
 			xmlData = pXML;
 			//background_furthest = new Background(rootDisplay, "background_furthest", xmlData.level.background_1.file, xmlData.level.background_1.scrollspeed, levelWidth, levelHeight);
 			//background_closest = new Background(rootDisplay, "background_closest", xmlData.level.background_2.file, xmlData.level.background_2.scrollspeed, levelWidth, levelHeight);
@@ -143,6 +146,13 @@ package Engine
 					enemyArray.push(rootDisplay.getChildAt(i));
 					enemyArray[enemyArray.length - 1].rootDisplay = rootDisplay;
 				}
+				/*
+				if ( tempItem is MoneyProp )
+				{
+					moneyPropArray.push(rootDisplay.getChildAt(i));
+					moneyPropArray[moneyPropArray.length - 1].rootDisplay = rootDisplay;
+				}
+				*/
 			}
 		}
 		
@@ -241,6 +251,10 @@ package Engine
 				{
 					moneyBag.x -= scrollSpeed * pTime;
 				}
+				for each ( var moneyProp:MoneyProp in moneyPropArray)
+				{
+					moneyProp.x -= scrollSpeed * pTime;
+				}
 			}
 		
 		}
@@ -273,6 +287,11 @@ package Engine
 					for each (var moneyBag:MoneyBag in moneyBagArray)
 					{
 						moneyBag.x += scrollSpeed * pTime;
+					}
+					
+					for each ( var moneyProp:MoneyProp in moneyPropArray)
+					{
+						moneyProp.x += scrollSpeed * pTime;
 					}
 				}
 				//background_furthest.scrollRight(pTime);
@@ -310,6 +329,17 @@ package Engine
 					break;
 				}
 			}
+			for ( i = moneyPropArray.length - 1; i >= 0; i-- )
+			{
+				moneyPropArray[i].update();
+				if (moneyPropArray[i].checkCollisions(player))
+				{
+					rootDisplay.removeChild(moneyPropArray[i]);
+					moneyPropArray.splice(i, 1);
+					break;
+				}
+			}
+			
 		}
 		
 		/**

@@ -194,10 +194,25 @@ package Game
 			{
 				if (this.hitTestObject(tempEnemyArray[i]) && tempEnemyArray[i].x > (this.x+(this.width/4)) )
 				{
-					if (level.enemyArray[tempEnemyArrayCounter[i]].takeDamage(5))
+					if (level.enemyArray[tempEnemyArrayCounter[i]].takeDamage(25))
 					{
+						var tempTotal = Math.floor(Math.random() * 4);
+						//var tempTotal = 50;
+						var moneyProp:MoneyProp;
+						for ( var k:uint = 0; k <= tempTotal; k++)
+						{
+							moneyProp = new MoneyProp();
+							moneyProp.level = level;
+							moneyProp.x = level.enemyArray[tempEnemyArrayCounter[i]].x ;
+							moneyProp.y = level.enemyArray[tempEnemyArrayCounter[i]].y - level.enemyArray[tempEnemyArrayCounter[i]].height;
+							moneyProp.rootDisplay = rootDisplay;
+							rootDisplay.addChild(moneyProp);
+							level.moneyPropArray.push(moneyProp);
+						}
+						
 						rootDisplay.removeChild(level.enemyArray[tempEnemyArrayCounter[i]]);
 						level.enemyArray.splice(tempEnemyArrayCounter[i], 1);
+						
 					}
 					else
 					{
