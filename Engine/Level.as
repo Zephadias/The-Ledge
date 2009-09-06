@@ -51,6 +51,8 @@ package Engine
 		
 		public var moneyPropArray:Array;
 		
+		public var statisticsGenerator:StatisticsGenerator;
+		
 		/**
 		 * The level constructor.  Level's contain all the prop objects and background/foregrounds.
 		 * 
@@ -74,6 +76,7 @@ package Engine
 			enemyArray = new Array();
 			moneyBagArray = new Array();
 			moneyPropArray = new Array();
+			statisticsGenerator = new StatisticsGenerator();
 			xmlData = pXML;
 			//background_furthest = new Background(rootDisplay, "background_furthest", xmlData.level.background_1.file, xmlData.level.background_1.scrollspeed, levelWidth, levelHeight);
 			//background_closest = new Background(rootDisplay, "background_closest", xmlData.level.background_2.file, xmlData.level.background_2.scrollspeed, levelWidth, levelHeight);
@@ -324,6 +327,7 @@ package Engine
 			{
 				if (moneyBagArray[i].checkCollisions(player))
 				{
+					statisticsGenerator.moneyCollected += moneyBagArray[i].amount;
 					rootDisplay.removeChild(moneyBagArray[i]);
 					moneyBagArray.splice(i, 1);
 					break;
@@ -334,6 +338,7 @@ package Engine
 				moneyPropArray[i].update();
 				if (moneyPropArray[i].checkCollisions(player))
 				{
+					statisticsGenerator.moneyCollected += moneyBagArray[i].amount;
 					rootDisplay.removeChild(moneyPropArray[i]);
 					moneyPropArray.splice(i, 1);
 					break;

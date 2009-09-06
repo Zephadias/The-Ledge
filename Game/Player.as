@@ -95,6 +95,7 @@ package Game
 			jumpSpeed = xmlData.player.jumpspeed;
 			health = xmlData.player.health;
 			money = xmlData.player.money;
+			level.statisticsGenerator.moneyCollected += money;
 			//loadImage(playerImageLoaded, xmlData.player.file);
 		}
 		

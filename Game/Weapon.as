@@ -13,19 +13,21 @@ package Game
 {
 	import flash.display.*;
 	import Engine.*;
-	
-	private var weaponType:String;
-	private var _damage:int;
-	
-	private var rootDisplay:Object;
-	
+		
 	public class Weapon
 	{
+		
+		
+		private var weaponType:String;
+		private var _damage:int;
+		
+		private var rootDisplay:Object;
+	
 		public function Weapon(rootMC:Object, pType:String, pDamage:int) 
 		{ 
 			rootDisplay = rootMC;
 			weaponType = pType;
-			damage = pDamage;
+			_damage = pDamage;
 		}
 		
 		/**
@@ -49,7 +51,7 @@ package Game
 		}
 		
 		
-		public funcction get damage():int
+		public function get damage():int
 		{
 			return _damage;
 		}
