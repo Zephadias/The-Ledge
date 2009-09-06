@@ -68,6 +68,7 @@
 		{
 			if (this.hitTestObject(pPlayer) )
 			{
+				super.errorDisplay('AMOUNT = ' + this.amount);
 				if (pPlayer.money + this.amount >= pPlayer.MONEY_CONST)
 				{
 						pPlayer.money = pPlayer.MONEY_CONST;

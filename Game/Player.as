@@ -27,7 +27,8 @@ package Game
 		public var rangedWeapon:Weapon;
 		public var physicalWeapon:Weapon;
 		
-		//private var gravity:Number = .004;
+		// temp
+		public var damage:uint = 25;
 		
 		public var jumping:Boolean = false;
 		private var jumpSpeed:Number;
@@ -51,6 +52,8 @@ package Game
 		private var ledgeArray:Array;
 		
 		public var isAttacking:Boolean;
+		
+		public var courtDocuments:uint = 0;
 		
 		private var rootDisplay:Object;
 		
@@ -195,7 +198,7 @@ package Game
 			{
 				if (this.hitTestObject(tempEnemyArray[i]) && tempEnemyArray[i].x > (this.x+(this.width/4)) )
 				{
-					if (level.enemyArray[tempEnemyArrayCounter[i]].takeDamage(25))
+					if (level.enemyArray[tempEnemyArrayCounter[i]].takeDamage(damage))
 					{
 						var tempTotal = Math.floor(Math.random() * 4);
 						//var tempTotal = 50;

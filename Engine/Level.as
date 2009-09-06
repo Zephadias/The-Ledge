@@ -51,6 +51,10 @@ package Engine
 		
 		public var moneyPropArray:Array;
 		
+		public var powerUpArray:Array;
+		
+		public var courtDocumentsArray:Array;
+		
 		public var statisticsGenerator:StatisticsGenerator;
 		
 		/**
@@ -76,6 +80,8 @@ package Engine
 			enemyArray = new Array();
 			moneyBagArray = new Array();
 			moneyPropArray = new Array();
+			powerUpArray = new Array();
+			courtDocumentsArray = new Array();
 			statisticsGenerator = new StatisticsGenerator();
 			xmlData = pXML;
 			//background_furthest = new Background(rootDisplay, "background_furthest", xmlData.level.background_1.file, xmlData.level.background_1.scrollspeed, levelWidth, levelHeight);
@@ -149,13 +155,17 @@ package Engine
 					enemyArray.push(rootDisplay.getChildAt(i));
 					enemyArray[enemyArray.length - 1].rootDisplay = rootDisplay;
 				}
-				/*
-				if ( tempItem is MoneyProp )
+				
+				if ( tempItem is PowerUp )
 				{
-					moneyPropArray.push(rootDisplay.getChildAt(i));
-					moneyPropArray[moneyPropArray.length - 1].rootDisplay = rootDisplay;
+					powerUpArray.push(rootDisplay.getChildAt(i));
+					powerUpArray[powerUpArray.length - 1].rootDisplay = rootDisplay;
 				}
-				*/
+				if ( tempItem is CourtDocuments )
+				{
+					courtDocumentsArray.push(rootDisplay.getChildAt(i));
+					courtDocumentsArray[courtDocumentsArray.length - 1].rootDisplay = rootDisplay;
+				}
 			}
 		}
 		
@@ -258,6 +268,14 @@ package Engine
 				{
 					moneyProp.x -= scrollSpeed * pTime;
 				}
+				for each ( var powerUp:PowerUp in powerUpArray)
+				{
+					powerUp.x -= scrollSpeed * pTime;
+				}
+				for each ( var courtDocument:CourtDocuments in courtDocumentsArray)
+				{
+					courtDocument.x -= scrollSpeed * pTime;
+				}
 			}
 		
 		}
@@ -296,6 +314,15 @@ package Engine
 					{
 						moneyProp.x += scrollSpeed * pTime;
 					}
+					for each ( var powerUp:PowerUp in powerUpArray)
+					{
+						powerUp.x += scrollSpeed * pTime;
+					}
+					for each ( var courtDocument:CourtDocuments in courtDocumentsArray)
+					{
+						courtDocument.x += scrollSpeed * pTime;
+					}
+
 				}
 				//background_furthest.scrollRight(pTime);
 				background_closest.scrollRight(pTime);
@@ -314,7 +341,8 @@ package Engine
 		 */
 		public function update(pTime:Number):void
 		{
-			for ( var i:int = pledgetArray.length - 1; i >= 0; i-- )
+			var i:int = 0;
+			for ( i = pledgetArray.length - 1; i >= 0; i-- )
 			{
 				if (pledgetArray[i].checkCollisions(player))
 				{
@@ -335,12 +363,33 @@ package Engine
 			}
 			for ( i = moneyPropArray.length - 1; i >= 0; i-- )
 			{
-				moneyPropArray[i].update();
+				
 				if (moneyPropArray[i].checkCollisions(player))
 				{
-					statisticsGenerator.moneyCollected += moneyBagArray[i].amount;
+					statisticsGenerator.moneyCollected += moneyPropArray[i].amount;
 					rootDisplay.removeChild(moneyPropArray[i]);
 					moneyPropArray.splice(i, 1);
+					break;
+				}
+				moneyPropArray[i].update();
+			}
+			
+			for ( i = powerUpArray.length - 1; i >= 0; i-- )
+			{
+				if (powerUpArray[i].checkCollisions(player))
+				{
+					rootDisplay.removeChild(powerUpArray[i]);
+					powerUpArray.splice(i, 1);
+					break;
+				}
+			}
+			for ( i = courtDocumentsArray.length - 1; i >= 0; i-- )
+			{
+				if (courtDocumentsArray[i].checkCollisions(player))
+				{
+					statisticsGenerator.courtDocumentsCollected++;
+					rootDisplay.removeChild(courtDocumentsArray[i]);
+					courtDocumentsArray.splice(i, 1);
 					break;
 				}
 			}
