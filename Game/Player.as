@@ -17,19 +17,18 @@ package Game
 	import flash.net.URLRequest;
 	import flash.net.URLLoader;
 	import Engine.*;
+	import flash.utils.Timer;
+	import flash.events.*;
 	
 	public class Player extends MovieClip
 	{
 		public const HEALTH_CONST:uint = 5475;
-		public const MONEY_CONST:uint = 1000;
+		public const MONEY_CONST:uint = 10000;
 		public var health:uint;
 		public var money:uint;
-		public var rangedWeapon:Weapon;
-		public var physicalWeapon:Weapon;
-		
-		// temp
-		public var damage:uint = 25;
-		
+		public var rangedWeapon:Dredge;
+		public var physicalWeapon:SledgeHammer;
+			
 		public var jumping:Boolean = false;
 		private var jumpSpeed:Number;
 		
@@ -48,10 +47,11 @@ package Game
 		private var xmlData:XML;
 		public var jump:Boolean;
 				
-		private var level:Level;
+		public var level:Level;
 		private var ledgeArray:Array;
 		
 		public var isAttacking:Boolean;
+		public var startTimer:Timer;
 		
 		public var courtDocuments:uint = 0;
 		
@@ -72,6 +72,9 @@ package Game
 			level = pLevel;
 			ledgeArray = level.ledgeArray;
 			isAttacking = false;
+			physicalWeapon = new SledgeHammer(rootDisplay, 25, this);
+			rangedWeapon = new Dredge(rootDisplay, 25, this);
+			//standStill();
 			xmlData = xml;
 			//rootDisplay.addChild(this);
 			extractXML();
@@ -102,8 +105,14 @@ package Game
 			//loadImage(playerImageLoaded, xmlData.player.file);
 		}
 		
+		public function standStill():void
+		{
+			//this.Edger.gotoAndPlay("StandingStill");
+		}
+		
 		public function update(pTime:Number):void
 		{
+			//this.Edger.gotoAndPlay("StandingStill");
 			if (pTime < 1) return;
 			
 			var verticalChange:Number = this.dy * pTime + pTime * level.gravity;
@@ -137,6 +146,8 @@ package Game
 			}
 			
 			this.y = newY;
+			if (rangedWeapon.dredgeActive)
+				rangedWeapon.dredgeCone.y = this.y - this.height - this.height / 4;
 		}
 		
 		/**
@@ -150,7 +161,9 @@ package Game
 		{
 			if( !( (this.x - this.width/4 - (speed*pTime)) <= 0))
 			{
-				this.x -= speed*pTime;
+				this.x -= speed * pTime;
+				if(rangedWeapon.dredgeActive)
+					rangedWeapon.dredgeCone.x -= speed * pTime;
 			}
 		}
 		
@@ -165,8 +178,17 @@ package Game
 		{
 			if( !( (this.x + (this.width/2) + (speed*pTime) ) >= (level.levelWidth - level.levelWidth/4) ) )
 			{
-				this.x += speed*pTime;
+				this.x += speed * pTime;
+				if(rangedWeapon.dredgeActive)
+					rangedWeapon.dredgeCone.x += speed * pTime;
 			}
+			/*
+			if ( this.Edger.currentFrame > 33 )
+			{
+				errorDisplay(this.Edger.currentFrame);
+				this.Edger.gotoAndPlay("RunStart");
+			}
+			*/
 		}
 		
 		public function checkCollision(pObject:Object):Boolean
@@ -174,15 +196,58 @@ package Game
 			return false;
 		}
 		
+		/*private function rangedAttackTimer(event:TimerEvent):void
+		{
+			errorDisplay("ranged attack timer");
+			
+			
+			for ( var i:int = tempEnemyArray.length - 1; i >= 0; i-- )
+			{
+				if (this.hitTestObject(tempEnemyArray[i]) )
+				{
+					if (level.enemyArray[tempEnemyArrayCounter[i]].takeDamage(rangedWeapon.damage))
+					{
+						var tempTotal = Math.floor(Math.random() * 4);
+					
+						var moneyProp:MoneyProp;
+						for ( var k:uint = 0; k <= tempTotal; k++)
+						{
+							moneyProp = new MoneyProp();
+							moneyProp.level = level;
+							moneyProp.x = level.enemyArray[tempEnemyArrayCounter[i]].x ;
+							moneyProp.y = level.enemyArray[tempEnemyArrayCounter[i]].y - level.enemyArray[tempEnemyArrayCounter[i]].height;
+							moneyProp.rootDisplay = rootDisplay;
+							rootDisplay.addChild(moneyProp);
+							level.moneyPropArray.push(moneyProp);
+						}
+						
+						rootDisplay.removeChild(level.enemyArray[tempEnemyArrayCounter[i]]);
+						level.enemyArray.splice(tempEnemyArrayCounter[i], 1);
+						
+					}
+					else
+					{
+						errorDisplay('Enemy took damage.  Health is now: ' + level.enemyArray[tempEnemyArrayCounter[i]].health);
+					}
+				}
+			}
+			tempEnemyArray.splice(0);
+			tempEnemyArrayCounter.splice(0);		
+			
+		}
+		*/
 		public function rangedAttack():void
 		{
+			isAttacking = true;
 			
+			rangedWeapon.activate();
 		}
 		
 		public function physicalAttack():void
 		{
 			isAttacking = true;
-			this.gotoAndPlay(2);
+			this.gotoAndPlay("Physical");
+		
 			var tempEnemyArray:Array = new Array();
 			var tempEnemyArrayCounter:Array = new Array();
 			for ( var j:int = level.enemyArray.length - 1; j >= 0; j-- )
@@ -198,7 +263,7 @@ package Game
 			{
 				if (this.hitTestObject(tempEnemyArray[i]) && tempEnemyArray[i].x > (this.x+(this.width/4)) )
 				{
-					if (level.enemyArray[tempEnemyArrayCounter[i]].takeDamage(damage))
+					if (level.enemyArray[tempEnemyArrayCounter[i]].takeDamage(physicalWeapon.damage))
 					{
 						var tempTotal = Math.floor(Math.random() * 4);
 						//var tempTotal = 50;
@@ -225,7 +290,7 @@ package Game
 				}
 			}
 			tempEnemyArray.splice(0);
-			tempEnemyArrayCounter.splice(0);
+			tempEnemyArrayCounter.splice(0);		
 		}
 		
 		public function spawn(pXLoc:Number, pYLoc:Number):void

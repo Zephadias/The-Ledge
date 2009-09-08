@@ -196,7 +196,10 @@ package Game
 			{
 				player.moveRight(timeDecimal);
 				level_1.scrollLeft(timeDecimal);
-				
+			}
+			if (!rightButton)
+			{
+				//player.Edger.gotoAndPlay("StandingStill");
 			}
 			if (spacebarButton)
 			{
@@ -208,8 +211,29 @@ package Game
 			}
 			if ( physicalAttackButton )
 			{
-				if(!player.isAttacking)
+				if (!player.isAttacking)
+				{
+					//errorDisplay("Is physical attacking...");
 					player.physicalAttack();
+				}
+			}
+			
+			if ( rangedAttackButton )
+			{
+				if (!player.isAttacking)
+				{
+					//errorDisplay("is range attacking...");
+					player.rangedAttack();
+				}
+			}
+			
+			if ( !rangedAttackButton )
+			{
+				if (player.rangedWeapon.dredgeActive)
+				{
+					rootDisplay.removeChild(player.rangedWeapon.dredgeCone);
+					player.rangedWeapon.dredgeActive = false;
+				}
 			}
 		}
 		
@@ -304,6 +328,10 @@ package Game
 			else if(event.keyCode == RANGED_ATTACK)
 			{
 				rangedAttackButton = false;
+				player.isAttacking = false;
+				
+				if(player.rangedWeapon.startTimer != null)
+					player.rangedWeapon.startTimer.reset();
 			}
 			
 			else if(event.keyCode == PHYSICAL_ATTACK)

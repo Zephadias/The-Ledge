@@ -23,11 +23,11 @@
 		{
 			if ( this.hitTestObject(pPlayer) )
 			{
-				if ( pPlayer.damage == 25 )
+				if ( pPlayer.physicalWeapon.damage == 25 )
 				{
 					errorDisplay("Picking up PowerUp...");
-					pPlayer.damage += _damageValue;
-					errorDisplay("Player damage: " + pPlayer.damage);
+					pPlayer.physicalWeapon.damage += _damageValue;
+					errorDisplay("Player damage: " + pPlayer.physicalWeapon.damage);
 					startTimer = new Timer(timeLength, 1);
 					startTimer.addEventListener(TimerEvent.TIMER, addArguments(timer, [pPlayer]));
 					startTimer.start();
@@ -42,8 +42,8 @@
 		private function timer(event:TimerEvent, pPlayer:Player):void
 		{
 			errorDisplay("PLAYER DAMAGE BACK TO NORMAL");
-			pPlayer.damage -= _damageValue;
-			errorDisplay("Player damage: " + pPlayer.damage);
+			pPlayer.physicalWeapon.damage -= _damageValue;
+			errorDisplay("Player damage: " + pPlayer.physicalWeapon.damage);
 		}
 		
 		/**

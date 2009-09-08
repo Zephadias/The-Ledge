@@ -276,6 +276,7 @@ package Engine
 				{
 					courtDocument.x -= scrollSpeed * pTime;
 				}
+				
 			}
 		
 		}
@@ -322,6 +323,8 @@ package Engine
 					{
 						courtDocument.x += scrollSpeed * pTime;
 					}
+					
+					
 
 				}
 				//background_furthest.scrollRight(pTime);
@@ -342,6 +345,7 @@ package Engine
 		public function update(pTime:Number):void
 		{
 			var i:int = 0;
+
 			for ( i = pledgetArray.length - 1; i >= 0; i-- )
 			{
 				if (pledgetArray[i].checkCollisions(player))

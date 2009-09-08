@@ -17,24 +17,22 @@ package Game
 	public class Weapon
 	{
 		
+		public var damage:int;
 		
-		private var weaponType:String;
-		private var _damage:int;
-		
-		private var rootDisplay:Object;
+		protected var rootDisplay:Object;
 	
-		public function Weapon(rootMC:Object, pType:String, pDamage:int) 
+		protected var player:Player;
+		
+		public function Weapon() 
 		{ 
-			rootDisplay = rootMC;
-			weaponType = pType;
-			_damage = pDamage;
+			
 		}
 		
 		/**
 		* Output text to the debugging console
 		* @param arg The output to the debugger 
 		*/
-		private function errorDisplay(arg:*):void
+		protected function errorDisplay(arg:*):void
 		{
 			rootDisplay.debugger.appendText(arg + '\n');
 			rootDisplay.debugger.verticalScrollPosition = rootDisplay.debugger.maxVerticalScrollPosition;
@@ -47,13 +45,8 @@ package Game
 		{
 			errorDisplay("--------------------------------");
 			errorDisplay("Weapon Information");
+			errorDisplay("Damage: " + damage);
 			errorDisplay("--------------------------------");
-		}
-		
-		
-		public function get damage():int
-		{
-			return _damage;
 		}
 	
 	}
