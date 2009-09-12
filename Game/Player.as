@@ -250,11 +250,11 @@ package Game
 		
 			var tempEnemyArray:Array = new Array();
 			var tempEnemyArrayCounter:Array = new Array();
-			for ( var j:int = level.enemyArray.length - 1; j >= 0; j-- )
+			for ( var j:int = level.enemyManager.enemyArray.length - 1; j >= 0; j-- )
 			{
-				if ( level.enemyArray[j].x <= this.x + 125 && level.enemyArray[j].x + 125 >= this.x)
+				if ( level.enemyManager.enemyArray[j].x <= this.x + 125 && level.enemyManager.enemyArray[j].x + 125 >= this.x)
 				{
-					tempEnemyArray.push(level.enemyArray[j]);
+					tempEnemyArray.push(level.enemyManager.enemyArray[j]);
 					tempEnemyArrayCounter.push(j);
 				}
 			}
@@ -263,7 +263,7 @@ package Game
 			{
 				if (this.hitTestObject(tempEnemyArray[i]) && tempEnemyArray[i].x > (this.x+(this.width/4)) )
 				{
-					if (level.enemyArray[tempEnemyArrayCounter[i]].takeDamage(physicalWeapon.damage))
+					if (level.enemyManager.enemyArray[tempEnemyArrayCounter[i]].takeDamage(physicalWeapon.damage))
 					{
 						var tempTotal = Math.floor(Math.random() * 4);
 						//var tempTotal = 50;
@@ -272,20 +272,20 @@ package Game
 						{
 							moneyProp = new MoneyProp();
 							moneyProp.level = level;
-							moneyProp.x = level.enemyArray[tempEnemyArrayCounter[i]].x ;
-							moneyProp.y = level.enemyArray[tempEnemyArrayCounter[i]].y - level.enemyArray[tempEnemyArrayCounter[i]].height;
+							moneyProp.x = level.enemyManager.enemyArray[tempEnemyArrayCounter[i]].x ;
+							moneyProp.y = level.enemyManager.enemyArray[tempEnemyArrayCounter[i]].y - level.enemyManager.enemyArray[tempEnemyArrayCounter[i]].height;
 							moneyProp.rootDisplay = rootDisplay;
 							rootDisplay.addChild(moneyProp);
 							level.moneyPropArray.push(moneyProp);
 						}
 						
-						rootDisplay.removeChild(level.enemyArray[tempEnemyArrayCounter[i]]);
-						level.enemyArray.splice(tempEnemyArrayCounter[i], 1);
+						rootDisplay.removeChild(level.enemyManager.enemyArray[tempEnemyArrayCounter[i]]);
+						level.enemyManager.enemyArray.splice(tempEnemyArrayCounter[i], 1);
 						
 					}
 					else
 					{
-						errorDisplay('Enemy took damage.  Health is now: ' + level.enemyArray[tempEnemyArrayCounter[i]].health);
+						errorDisplay('Enemy took damage.  Health is now: ' + level.enemyManager.enemyArray[tempEnemyArrayCounter[i]].health);
 					}
 				}
 			}

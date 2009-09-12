@@ -27,7 +27,9 @@
 				{
 					errorDisplay("Picking up PowerUp...");
 					pPlayer.physicalWeapon.damage += _damageValue;
-					errorDisplay("Player damage: " + pPlayer.physicalWeapon.damage);
+					pPlayer.rangedWeapon.damage += _damageValue;
+					errorDisplay("Physical damage: " + pPlayer.physicalWeapon.damage);
+					errorDisplay("Ranged damage: " + pPlayer.rangedWeapon.damage);
 					startTimer = new Timer(timeLength, 1);
 					startTimer.addEventListener(TimerEvent.TIMER, addArguments(timer, [pPlayer]));
 					startTimer.start();

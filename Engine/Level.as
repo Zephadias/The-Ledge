@@ -35,7 +35,7 @@ package Engine
 		
 		private var _gravity:Number = 0.004;
 		
-		private var rootDisplay:Object;
+		public var rootDisplay:Object;
 		
 		private var xmlData:XML;
 		
@@ -56,6 +56,8 @@ package Engine
 		public var courtDocumentsArray:Array;
 		
 		public var statisticsGenerator:StatisticsGenerator;
+		
+		public var enemyManager:EnemyManager;
 		
 		/**
 		 * The level constructor.  Level's contain all the prop objects and background/foregrounds.
@@ -96,6 +98,8 @@ package Engine
 			_levelHeight = pLevelHeight;
 			_levelEdge = pLevelWidth / 2;
 			scrollSpeed = xmlData.level.scrollspeed;
+			
+			enemyManager = new EnemyManager(this);
 		}
 		
 		public function addBackground(pLocation:String):void
@@ -150,11 +154,11 @@ package Engine
 					moneyBagArray[moneyBagArray.length - 1].rootDisplay = rootDisplay;
 				}
 				
-				if ( tempItem is Enemy )
+				/*if ( tempItem is Enemy )
 				{
 					enemyArray.push(rootDisplay.getChildAt(i));
 					enemyArray[enemyArray.length - 1].rootDisplay = rootDisplay;
-				}
+				}*/
 				
 				if ( tempItem is PowerUp )
 				{
@@ -167,6 +171,7 @@ package Engine
 					courtDocumentsArray[courtDocumentsArray.length - 1].rootDisplay = rootDisplay;
 				}
 			}
+			enemyManager.getAllEnemies();
 		}
 		
 		public function get gravity():Number
@@ -256,7 +261,7 @@ package Engine
 				{
 					prop.x -= scrollSpeed * pTime;
 				}
-				for each (var enemy:Enemy in enemyArray)
+				for each (var enemy:Enemy in enemyManager.enemyArray)
 				{
 					enemy.x -= scrollSpeed * pTime;
 				}
@@ -302,7 +307,7 @@ package Engine
 					{
 						prop.x += scrollSpeed * pTime;
 					}
-					for each (var enemy:Enemy in enemyArray)
+					for each (var enemy:Enemy in enemyManager.enemyArray)
 					{
 						enemy.x += scrollSpeed * pTime;
 					}
@@ -345,7 +350,9 @@ package Engine
 		public function update(pTime:Number):void
 		{
 			var i:int = 0;
-
+			
+			enemyManager.runAI(pTime);
+			
 			for ( i = pledgetArray.length - 1; i >= 0; i-- )
 			{
 				if (pledgetArray[i].checkCollisions(player))

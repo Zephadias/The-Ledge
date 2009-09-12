@@ -13,47 +13,56 @@ package Game
 {
 	import flash.display.*;
 	import Engine.*;
+	import flash.geom.Point;
 	
 	public class Enemy extends MovieClip
 	{
-		public var health:uint;
-		public var damage:uint;
-		public var isAttacking:Boolean;
-		public var jumpHeight:uint;
+		protected static const WALKING_FRAME:String = 'walking'; 
+		protected static const ATTACKING_FRAME:String = 'attacking'; 
+		public var health:int;
+		public var damage:int;
+		private var isPhysicalAttack:Boolean;
+		private var isRangeAttack:Boolean;
+		//public var jumpHeight:uint;
 		public var rangedWeapon:Weapon;
 		public var physicalWeapon:Weapon;
+		public var speed:int;
 		
-		private var _bottomY:Number;
-		private var _topY:Number;
-		private var _leftX:Number;
-		private var _rightX:Number;
+		//private var _bottomY:Number;
+		//private var _topY:Number;
+		//private var _leftX:Number;
+		//private var _rightX:Number;
 		
-		private var _rootDisplay:Object;
+		public var rootDisplay:Object;
 		
-		public function Enemy() 
-		{ 
-			_bottomY = this.height;
-			_topY = 0;
-			_leftX = 0;
-			_rightX = this.width;
-		}
-		
-		public function set rootDisplay(pRootDisplay:Object):void
+		public function Enemy ()
 		{
-			_rootDisplay = pRootDisplay;
+			//_bottomY = this.height;
+			//_topY = 0;
+			//_leftX = 0;
+			//_rightX = this.width;
 		}
+		
+		//public function set rootDisplay(pRootDisplay:Object):void
+		//{
+			//_rootDisplay = pRootDisplay;
+		//}
 		
 		public function update():void
 		{
 			
 		}
-		
-		public function takeDamage(pDamage:uint):Boolean
+		/**
+		 * Decrement health and determine if dead.
+		 * @param	pDamage Amount of damage.
+		 * @return	true if dead, else false
+		 */
+		public function takeDamage(pDamage:int):Boolean
 		{
-			if (this.health - pDamage <= 0)
+			if (this.health - pDamage < 0)
 			{
 				this.health = 0;
-				return true;
+				return true; // Character is dead, so ... do something about that, please!
 			}
 			else
 			{
@@ -62,59 +71,61 @@ package Game
 			return false;
 		}
 		
-		public function checkCollision(pObject:Object):Boolean
+		protected function moveLeft():void
 		{
-			return false;
+			// Decrement x value.
 		}
 		
-		private function moveLeft():void
+		protected function moveRight():void
 		{
+			// Increment x value.
+		}
+		
+		protected function rangedAttack():void
+		{
+			// THrow something.
+		}
+		
+		protected function standStill():void {
 			
 		}
 		
-		private function moveRight():void
-		{
+		
+		
+		protected function beAgressive():void {
 			
 		}
-				
-		private function rangedAttack():void
-		{
+		protected function beNormal():void {
 			
 		}
+
 		
-		private function physicalAttack():void
+		protected function physicalAttack():void
 		{
-			
+			// Punch someone.
 		}
 		
-		public function getPlayersXLocation():Number
+		public function destroy():void
 		{
-			return 1;
+			// Clear me.
+			// Destructor.
 		}
 		
-		public function getPlayersYLocation():Number
-		{
-			return 1;
+		/**
+		 * My own action loop.
+		 * @usage Called by EnemyManager whenever I'm running.
+		 */
+		public function runAI (pTime:Number):void {
+			//errorDisplay(pTime);
 		}
-		
-		private function destroy():void
-		{
-			
-		}
-		
-		public function spawn(pXLoc:Number, pYLoc:Number):void
-		{
-			
-		}
-		
 		/**
 		* Output text to the debugging console
 		* @param arg The output to the debugger 
 		*/
 		private function errorDisplay(arg:*):void
 		{
-			_rootDisplay.debugger.appendText(arg + '\n');
-			_rootDisplay.debugger.verticalScrollPosition = _rootDisplay.debugger.maxVerticalScrollPosition;
+			rootDisplay.debugger.appendText(arg + '\n');
+			rootDisplay.debugger.verticalScrollPosition = rootDisplay.debugger.maxVerticalScrollPosition;
 		}
 		
 		/**
@@ -126,7 +137,7 @@ package Game
 			errorDisplay("Enemy Information");
 			errorDisplay("Health: " + this.health);
 			errorDisplay("Damage: " + this.damage);
-			errorDisplay("Jump Height: " + this.jumpHeight);
+			//errorDisplay("Jump Height: " + this.jumpHeight);
 			errorDisplay("Ranged Weapon: " + rangedWeapon);
 			errorDisplay("Physical Weapon: " + physicalWeapon);
 			errorDisplay("X Location: " + this.x);
@@ -134,25 +145,25 @@ package Game
 			errorDisplay("--------------------------------");
 		}
 		
-		public function get bottomY():Number
-		{
-			return _bottomY;
-		}
-		
-		public function get topY():Number
-		{
-			return _topY;
-		}
-		
-		public function get leftX():Number
-		{
-			return _leftX;
-		}
-		
-		public function get rightX():Number
-		{
-			return _rightX;
-		}
+		//public function get bottomY():Number
+		//{
+			//return _bottomY;
+		//}
+		//
+		//public function get topY():Number
+		//{
+			//return _topY;
+		//}
+		//
+		//public function get leftX():Number
+		//{
+			//return _leftX;
+		//}
+		//
+		//public function get rightX():Number
+		//{
+			//return _rightX;
+		//}
 	}
 	
 }

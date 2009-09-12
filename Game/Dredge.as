@@ -47,11 +47,11 @@
 					
 					var tea:Array = new Array();
 					var teac:Array = new Array();
-					for ( var j:int = super.player.level.enemyArray.length - 1; j >= 0; j-- )
+					for ( var j:int = super.player.level.enemyManager.enemyArray.length - 1; j >= 0; j-- )
 					{
-						if ( super.player.level.enemyArray[j].x <= super.player.x + 800 && super.player.level.enemyArray[j].x + 800 >= super.player.x)
+						if ( super.player.level.enemyManager.enemyArray[j].x <= super.player.x + 800 && super.player.level.enemyManager.enemyArray[j].x + 800 >= super.player.x)
 						{
-							tea.push(super.player.level.enemyArray[j]);
+							tea.push(super.player.level.enemyManager.enemyArray[j]);
 							teac.push(j);
 						}
 					}
@@ -86,7 +86,7 @@
 			{
 				if (dredgeCone.hitTestObject(tempEnemyArray[i]) )
 				{
-					if (super.player.level.enemyArray[tempEnemyArrayCounter[i]].takeDamage(super.damage))
+					if (super.player.level.enemyManager.enemyArray[tempEnemyArrayCounter[i]].takeDamage(super.damage))
 					{
 						var tempTotal = Math.floor(Math.random() * 4);
 					
@@ -95,20 +95,20 @@
 						{
 							moneyProp = new MoneyProp();
 							moneyProp.level = super.player.level;
-							moneyProp.x = super.player.level.enemyArray[tempEnemyArrayCounter[i]].x ;
-							moneyProp.y = super.player.level.enemyArray[tempEnemyArrayCounter[i]].y - super.player.level.enemyArray[tempEnemyArrayCounter[i]].height;
+							moneyProp.x = super.player.level.enemyManager.enemyArray[tempEnemyArrayCounter[i]].x ;
+							moneyProp.y = super.player.level.enemyManager.enemyArray[tempEnemyArrayCounter[i]].y - super.player.level.enemyManager.enemyArray[tempEnemyArrayCounter[i]].height;
 							moneyProp.rootDisplay = super.rootDisplay;
 							super.rootDisplay.addChild(moneyProp);
 							super.player.level.moneyPropArray.push(moneyProp);
 						}
 						
-						super.rootDisplay.removeChild(super.player.level.enemyArray[tempEnemyArrayCounter[i]]);
-						super.player.level.enemyArray.splice(tempEnemyArrayCounter[i], 1);
+						super.rootDisplay.removeChild(super.player.level.enemyManager.enemyArray[tempEnemyArrayCounter[i]]);
+						super.player.level.enemyManager.enemyArray.splice(tempEnemyArrayCounter[i], 1);
 						
 					}
 					else
 					{
-						super.errorDisplay('Enemy took damage.  Health is now: ' + super.player.level.enemyArray[tempEnemyArrayCounter[i]].health);
+						super.errorDisplay('Enemy took damage.  Health is now: ' + super.player.level.enemyManager.enemyArray[tempEnemyArrayCounter[i]].health);
 					}
 				}
 			}
