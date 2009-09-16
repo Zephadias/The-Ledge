@@ -29,7 +29,7 @@ package Game
 		public var rangedWeapon:Dredge;
 		public var physicalWeapon:SledgeHammer;
 			
-		public var jumping:Boolean = false;
+		//public var jumping:Boolean = false;
 		private var jumpSpeed:Number;
 		
 		public var speed:uint;
@@ -46,7 +46,7 @@ package Game
 		
 		private var xmlData:XML;
 		public var jump:Boolean;
-				
+		
 		public var level:Level;
 		private var ledgeArray:Array;
 		
@@ -57,7 +57,8 @@ package Game
 		
 		private var rootDisplay:Object;
 		
-		//public function Player(pRootDisplay:Object, xml:XML) 
+		//public function Player(pRootDisplay:Object, xml:XML)
+		
 		public function Player(pRootDisplay:Object, pLevel:Level, xml:XML)
 		{ 
 			rootDisplay = pRootDisplay;

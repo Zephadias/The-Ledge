@@ -176,7 +176,7 @@ package Game
 			{
 				gameTime = getTimer();
 			}
-				
+			
 			var timeDifference:uint = getTimer() - gameTime;
 			
 			gameTime += timeDifference;

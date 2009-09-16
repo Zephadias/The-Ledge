@@ -14,9 +14,12 @@ package Engine
 	
 	import flash.display.*;
 	import Game.*;
-	
+	/**
+	 * Can be used like a singleton because the instance is stored statically.
+	 */
 	public class Level extends MovieClip
 	{
+		private static var _instance:Level; // Allows distribution of members via static methods.
 		private var _levelTitle:String;
 		public var levelActive:Boolean;
 		private var propArray:Array;
@@ -33,7 +36,7 @@ package Engine
 		
 		public var pause:Boolean;
 		
-		private var _gravity:Number = 0.004;
+		public static const GRAVITY:Number = 0.004; // (Phil: Changed to public static const for objects that use it, but 'Player' still uses the getter defined below.)
 		
 		public var rootDisplay:Object;
 		
@@ -73,6 +76,7 @@ package Engine
 		//public function Level(pRootDisplay:Object, pLevelTitle:String, pXML:XML, pLevelWidth:uint, pLevelHeight:uint) 
 		public function Level(pRootDisplay:Object, pLevelTitle:String, pLevelWidth:uint, pLevelHeight:uint, pXML:XML) 
 		{ 
+			_instance = this;
 			rootDisplay = pRootDisplay;
 			_levelTitle = pLevelTitle;
 			levelActive = false;
@@ -176,7 +180,7 @@ package Engine
 		
 		public function get gravity():Number
 		{
-			return _gravity;
+			return GRAVITY;
 		}
 		
 		public function get levelWidth():uint
@@ -441,7 +445,13 @@ package Engine
 		{
 			return _levelTitle;
 		}
-		
+		/**
+		 * For clients that need to access my ledge array w/out reference to me.
+		 * @return Array The ledge array.
+		 */
+		public static function getLedgeArray():Array {
+			return _instance.ledgeArray;
+		}
 		/**
 		* Output text to the debugging console
 		* @param arg The output to the debugger 

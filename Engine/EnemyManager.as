@@ -30,7 +30,7 @@ package Engine
 			// Loop through root display.
 			for ( var i:int = rootDisplay.numChildren - 1; i >= 0; i-- )		
 			{
-				var tempItem = rootDisplay.getChildAt(i).valueOf();				
+				var tempItem = rootDisplay.getChildAt(i).valueOf();
 				if ( tempItem is Enemy )
 				{
 					enemyArray.push(rootDisplay.getChildAt(i));
@@ -43,7 +43,7 @@ package Engine
 		 */
 		public function runAI (pTime:Number):void {
 			for each (var enemy:Enemy in enemyArray) {
-				enemy.runAI(pTime);
+				enemy.update(pTime);
 			}
 		}
 	}

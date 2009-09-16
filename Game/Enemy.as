@@ -19,14 +19,22 @@ package Game
 	{
 		protected static const WALKING_FRAME:String = 'walking'; 
 		protected static const ATTACKING_FRAME:String = 'attacking'; 
-		public var health:int;
-		public var damage:int;
-		private var isPhysicalAttack:Boolean;
-		private var isRangeAttack:Boolean;
-		//public var jumpHeight:uint;
+		public var health:int = 100;
+		protected static const DAMAGE:uint = 10;
+		// Physics-related:
+		private var speed:uint = 1;
+		private var dx:Number = 0; // Change of X coord over time.
+		private var dy:Number = 0; // Change of Y coord over time.
+		private var inAir:Boolean;
+		private var isJumping:Boolean = false;
+		protected static const JUMP_SPEED:uint = 10;
+		protected static const JUMP_HEIGHT:uint = 20;
+		protected static const TIME_DIFFERENCE_MULTIPLER:uint = 10; // Multiplies time since last frame call to usable value.
+		// Weaponry:
 		public var rangedWeapon:Weapon;
 		public var physicalWeapon:Weapon;
-		public var speed:int;
+		private var isPhysicalAttack:Boolean;
+		private var isRangeAttack:Boolean;
 		
 		//private var _bottomY:Number;
 		//private var _topY:Number;
@@ -48,9 +56,43 @@ package Game
 			//_rootDisplay = pRootDisplay;
 		//}
 		
-		public function update():void
+		/**
+		 * Action loop.
+		 * Called by EnemyManager to make me run.
+		 * @param pTime     Time since last frame call.
+		 */
+		public function update(pTime:Number):void
 		{
-			
+			if (pTime == 0) return;
+			var timeDifference:Number = pTime * TIME_DIFFERENCE_MULTIPLER;
+			moveLeft(timeDifference);
+			// Handle vertical movement and platform detection
+			dy += timeDifference * Level.GRAVITY;
+			var verticalChange:Number = dy * timeDifference + timeDifference * Level.GRAVITY;
+			verticalChange = verticalChange > JUMP_HEIGHT ? JUMP_HEIGHT : verticalChange;
+			if (isJumping) {
+				verticalChange = -JUMP_SPEED;
+				dy = -JUMP_SPEED;
+				isJumping = false;
+			}
+			this.inAir = true; // Default to 'not on a platform'. Checked against platform below.
+			var newY:Number = y + verticalChange;
+			var ledgeArray:Array = Level.getLedgeArray();
+			for ( var i:int = ledgeArray.length - 1; i >= 0; i-- ) {
+				var thisLedge:Ledge = ledgeArray[i];
+				var withinLeft:Boolean = x+width/2 > thisLedge.x;
+				var withinRight:Boolean = x-width/2 < thisLedge.x+thisLedge.width;
+				if (withinLeft && withinRight) {
+					var isAbove:Boolean = y <= thisLedge.y;
+					var willBeBelow:Boolean = newY > thisLedge.y;
+					if (isAbove && willBeBelow) {
+						newY = thisLedge.y;
+						dy = 0;
+						inAir = false;
+					}
+				}
+			}
+			y = newY;
 		}
 		/**
 		 * Decrement health and determine if dead.
@@ -70,14 +112,20 @@ package Game
 			}
 			return false;
 		}
-		
-		protected function moveLeft():void
+		/**
+		 * @param	pTime Length of time since last frame call.
+		 */
+		protected function moveLeft(pTime:Number):void
 		{
-			// Decrement x value.
+			var hittingLeftSideOfScreen:Boolean = (this.x - this.width/4 - (speed*pTime)) <= 0;
+			if(!hittingLeftSideOfScreen) {
+				x -= speed * pTime;
+			}
 		}
 		
 		protected function moveRight():void
 		{
+			x += speed;
 			// Increment x value.
 		}
 		
@@ -111,13 +159,7 @@ package Game
 			// Destructor.
 		}
 		
-		/**
-		 * My own action loop.
-		 * @usage Called by EnemyManager whenever I'm running.
-		 */
-		public function runAI (pTime:Number):void {
-			//errorDisplay(pTime);
-		}
+
 		/**
 		* Output text to the debugging console
 		* @param arg The output to the debugger 
@@ -136,7 +178,7 @@ package Game
 			errorDisplay("--------------------------------");
 			errorDisplay("Enemy Information");
 			errorDisplay("Health: " + this.health);
-			errorDisplay("Damage: " + this.damage);
+			//errorDisplay("Damage: " + this.damage);
 			//errorDisplay("Jump Height: " + this.jumpHeight);
 			errorDisplay("Ranged Weapon: " + rangedWeapon);
 			errorDisplay("Physical Weapon: " + physicalWeapon);
