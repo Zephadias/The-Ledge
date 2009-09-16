@@ -157,6 +157,9 @@ package Game
 			level_1 = new Level(rootDisplay, "Level 1", GAME_WIDTH, GAME_HEIGHT, xmlData);
 			rootDisplay.addChildAt(level_1, 0);
 			level_1.addBackground("background_closest");
+			level_1.addBackground("background_furthest");
+			level_1.addBackground("foreground_closest");
+			level_1.addBackground("foreground_furthest");
 			player = new Player(rootDisplay, level_1, xmlData);
 			level_1.attachPlayer(player, 0, 0);
 			

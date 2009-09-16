@@ -117,6 +117,8 @@ package Engine
 					{
 						//background_furthest = new Background(rootDisplay, pLocation, pObject, xmlData.level.background_furthest.scrollspeed, this);
 						//background_furthest.setProperties(rootDisplay, pLocation, pObject, xmlData.level.background_furthest.scrollspeed, this);
+						background_furthest = rootDisplay.getChildAt(i);
+						background_furthest.setProperties(rootDisplay, "background_furthest", xmlData.level.background_furthest.scrollspeed, this);
 					}
 					else if ( pLocation == "background_closest" )
 					{
@@ -125,11 +127,13 @@ package Engine
 					}
 					else if ( pLocation == "foreground_closest" )
 					{
-						
+						foreground_closest = rootDisplay.getChildAt(i);
+						foreground_closest.setProperties(rootDisplay, "foreground_closest", xmlData.level.foreground_closest.scrollspeed, this);
 					}
 					else if ( pLocation == "foreground_furthest" )
 					{
-						
+						foreground_furthest = rootDisplay.getChildAt(i);
+						foreground_furthest.setProperties(rootDisplay, "foreground_furthest", xmlData.level.foreground_furthest.scrollspeed, this);
 					}
 				}
 			}
@@ -213,7 +217,7 @@ package Engine
 			pPlayer.x = xLoc;
 			pPlayer.y = yLoc;
 			player = pPlayer;
-			//attachForeground(-100);
+			attachForeground();
 		}
 		
 		/**
@@ -223,10 +227,13 @@ package Engine
 		 * @return  N/A
 		 */
 		
-		public function attachForeground(xLoc:int):void
+		public function attachForeground():void
 		{
-			this.addChildAt(foreground_furthest, 4);
-			foreground_furthest.x = xLoc;
+			//player.swapChildren();
+			rootDisplay.swapChildren(player, foreground_closest);
+			
+			//this.addChildAt(foreground_furthest, 4);
+			
 		}
 		
 		/**
@@ -252,10 +259,10 @@ package Engine
 		{
 			if(player.x+player.width/2 >= _levelEdge)
 			{
-				//background_furthest.scrollLeft(pTime);
+				background_furthest.scrollLeft(pTime);
 				background_closest.scrollLeft(pTime);
-				//foreground_furthest.scrollLeft(pTime);
-				//foreground_closest.scrollLeft(pTime);
+				foreground_furthest.scrollLeft(pTime);
+				foreground_closest.scrollLeft(pTime);
 				
 				for each (var ledge:Ledge in ledgeArray)
 				{
@@ -336,10 +343,10 @@ package Engine
 					
 
 				}
-				//background_furthest.scrollRight(pTime);
+				background_furthest.scrollRight(pTime);
 				background_closest.scrollRight(pTime);
-				//foreground_furthest.scrollRight(pTime);
-				//foreground_closest.scrollRight(pTime);
+				foreground_furthest.scrollRight(pTime);
+				foreground_closest.scrollRight(pTime);
 				
 			}
 		}
