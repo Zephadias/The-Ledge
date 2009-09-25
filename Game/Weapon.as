@@ -16,15 +16,13 @@ package Game
 		
 	public class Weapon
 	{
-		
 		public var damage:int;
-		
 		protected var rootDisplay:Object;
-	
 		protected var player:Player;
+		private var _range:uint = 0; // Horizontal distance this weapon is capable of spanning. Could be the width of of the movie clip representing the weapon.
 		
 		public function Weapon() 
-		{ 
+		{
 			
 		}
 		
@@ -48,7 +46,11 @@ package Game
 			errorDisplay("Damage: " + damage);
 			errorDisplay("--------------------------------");
 		}
-	
+		/**
+		 * @return	_range
+		 */
+		public function get range ():uint {
+			return _range;
+		}
 	}
-	
 }

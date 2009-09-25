@@ -14,6 +14,7 @@ package Game
 	import flash.display.*;
 	import flash.display.BitmapData;
 	import flash.events.*;
+	import flash.geom.Point;
 	import flash.net.URLRequest;
 	import flash.net.URLLoader;
 	import Engine.*;
@@ -22,6 +23,7 @@ package Game
 	
 	public class Player extends MovieClip
 	{
+		private static var _instance:Player;
 		public const HEALTH_CONST:uint = 5475;
 		public const MONEY_CONST:uint = 10000;
 		public var health:uint;
@@ -61,6 +63,7 @@ package Game
 		
 		public function Player(pRootDisplay:Object, pLevel:Level, xml:XML)
 		{ 
+			_instance = this;
 			rootDisplay = pRootDisplay;
 			_bottomY = this.height;
 			_topY = 0;
@@ -347,7 +350,20 @@ package Game
 		{
 			return _rightX;
 		}
-	
+		
+		/**
+		 * Used by Enemy to get location for determining movement.
+		 */
+		public static function get location ():Point {
+			return new Point (_instance.x, _instance.y);
+		}
+		/**
+		 * hitTestObject wrapper.
+		 * Used by Enemy for determining its movement.
+		 * @param	$object	The object to check for collision with.
+		 */
+		public static function isTouching ($object:DisplayObject):Boolean {
+			return _instance.hitTestObject($object);
+		}
 	}
-	
 }

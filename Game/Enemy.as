@@ -9,16 +9,15 @@
 /*
 /**********************************************************/
 
-package Game 
-{
+package Game {
 	import flash.display.*;
 	import Engine.*;
 	import flash.geom.Point;
 	
-	public class Enemy extends MovieClip
-	{
-		protected static const WALKING_FRAME:String = 'walking'; 
-		protected static const ATTACKING_FRAME:String = 'attacking'; 
+	public class Enemy extends MovieClip {
+		protected static const WALKING_FRAME:String = 'walking';
+		protected static const ATTACKING_FRAME:String = 'attacking';
+		
 		public var health:int = 100;
 		protected static const DAMAGE:uint = 10;
 		// Physics-related:
@@ -31,8 +30,8 @@ package Game
 		protected static const JUMP_HEIGHT:uint = 20;
 		protected static const TIME_DIFFERENCE_MULTIPLER:uint = 10; // Multiplies time since last frame call to usable value.
 		// Weaponry:
+		public var physicalWeapon:Weapon = new ZombieTeeth();
 		public var rangedWeapon:Weapon;
-		public var physicalWeapon:Weapon;
 		private var isPhysicalAttack:Boolean;
 		private var isRangeAttack:Boolean;
 		
@@ -41,7 +40,7 @@ package Game
 		//private var _leftX:Number;
 		//private var _rightX:Number;
 		
-		public var rootDisplay:Object;
+		//public var rootDisplay:Object;
 		
 		public function Enemy ()
 		{
@@ -65,7 +64,7 @@ package Game
 		{
 			if (pTime == 0) return;
 			var timeDifference:Number = pTime * TIME_DIFFERENCE_MULTIPLER;
-			moveLeft(timeDifference);
+			moveTowardsPlayer(timeDifference);
 			// Handle vertical movement and platform detection
 			dy += timeDifference * Level.GRAVITY;
 			var verticalChange:Number = dy * timeDifference + timeDifference * Level.GRAVITY;
@@ -115,17 +114,29 @@ package Game
 		/**
 		 * @param	pTime Length of time since last frame call.
 		 */
-		protected function moveLeft(pTime:Number):void
+		protected function moveTowardsPlayer(pTime:Number):void
 		{
-			var hittingLeftSideOfScreen:Boolean = (this.x - this.width/4 - (speed*pTime)) <= 0;
-			if(!hittingLeftSideOfScreen) {
-				x -= speed * pTime;
+			var playerLocation:Point = Player.location;
+			var isWithinPhysicalAttackRange:Boolean = Player.isTouching(this);// Actually, we need to get the player's width and height, so we can see, not just if we're touching him, but if our weapon is touching him. So, we'll need to calculate... or we could just use some point on our weapon and do a hit Test point with the player to see if a point at the tip of our weapon is touching the player.
+			if (isWithinPhysicalAttackRange) {
+				//.Attack.   
 			}
+			if (true) {
+				if (playerLocation.x > this.x) {
+					x += speed;
+				} else {
+					x -= speed;
+				}
+			}
+			//var hittingLeftSideOfScreen:Boolean = (this.x - this.width/4 - (speed*pTime)) <= 0;
+			//if(!hittingLeftSideOfScreen) {
+				//x -= speed * pTime;
+			//}
 		}
 		
 		protected function moveRight():void
 		{
-			x += speed;
+			
 			// Increment x value.
 		}
 		
@@ -166,8 +177,8 @@ package Game
 		*/
 		private function errorDisplay(arg:*):void
 		{
-			rootDisplay.debugger.appendText(arg + '\n');
-			rootDisplay.debugger.verticalScrollPosition = rootDisplay.debugger.maxVerticalScrollPosition;
+			//rootDisplay.debugger.appendText(arg + '\n');
+			//rootDisplay.debugger.verticalScrollPosition = rootDisplay.debugger.maxVerticalScrollPosition;
 		}
 		
 		/**
